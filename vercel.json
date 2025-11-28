@@ -10,7 +10,6 @@
     { "src": "/admin(?:/)?", "dest": "/admin.html" },
     { "src": "/usersurvey(?:/)?", "dest": "/usersurvey.html" },
     { "src": "/index.html", "dest": "/usersurvey.html" },
-    { "src": "/", "dest": "/usersurvey.html" },
-    { "src": "/(.*)", "status": 404 }
+    { "src": "/", "dest": "/usersurvey.html" }
   ]
 }
