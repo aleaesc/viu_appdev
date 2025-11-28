@@ -1,0 +1,16 @@
+{
+  "name": "viu-backend",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Serverless backend for VIU frontend using Vercel + Firebase",
+  "scripts": {
+    "dev": "vercel dev",
+    "start": "vercel dev",
+    "build": "echo \"No build step for serverless JS\"",
+    "deploy": "vercel --prod"
+  },
+  "dependencies": {
+    "firebase-admin": "^12.5.0",
+    "zod": "^3.23.8"
+  }
+}
