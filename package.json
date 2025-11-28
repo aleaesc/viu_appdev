@@ -4,8 +4,6 @@
   "private": true,
   "description": "Serverless backend for VIU frontend using Vercel + Firebase",
   "scripts": {
-    "dev": "vercel dev",
-    "start": "vercel dev",
     "build": "echo \"No build step for serverless JS\"",
     "deploy": "vercel --prod"
   },
