@@ -1,0 +1,460 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VIU Admin Portal</title>
+    
+    <!-- Tailwind CSS & DaisyUI -->
+    <link href="https://cdn.jsdelivr.net/npm/daisyui@4.7.2/dist/full.min.css" rel="stylesheet" type="text/css" />
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <style>
+        body { font-family: 'Inter', sans-serif; overflow-x: hidden; background-color: #FAFAFA; }
+        .bg-viu-yellow { background-color: #F6BE00; }
+        .text-viu-yellow { color: #F6BE00; }
+        .border-viu-yellow { border-color: #F6BE00; }
+        .hover-bg-viu-dark:hover { background-color: #dca000; }
+        .hidden-page { display: none !important; }
+        .fade-in { animation: fadeIn 0.5s ease-in forwards; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+        .login-container { background-color: rgba(107, 114, 128, 0.8); }
+        .login-card { background-color: white; border-radius: 1.5rem; box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25); }
+        .input-login { background: transparent; border: none; border-bottom: 2px solid #E5E7EB; border-radius: 0; padding-left: 0; padding-right: 2.5rem; transition: border-color 0.3s ease; font-size: 1rem; color: #374151; height: 3rem; }
+        .input-login:focus { outline: none; border-bottom-color: #F6BE00; box-shadow: none; }
+        .sidebar-link { display: flex; align-items: center; gap: 0.75rem; padding: 0.75rem 1.5rem; color: #6B7280; font-weight: 600; font-size: 0.95rem; border-radius: 0.75rem; transition: all 0.2s; margin-bottom: 0.5rem; cursor: pointer; }
+        .sidebar-link:hover { background-color: #F3F4F6; color: black; }
+        .sidebar-link.active { background-color: #F6BE00; color: black; box-shadow: 0 4px 6px -1px rgba(246, 190, 0, 0.3); }
+        .dashboard-card { background-color: white; border-radius: 1rem; box-shadow: 0 1px 3px rgba(0,0,0,0.05); border: 1px solid #F3F4F6; padding: 1.5rem; }
+        .stat-label { color: #9CA3AF; font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.05em; font-weight: 600; margin-bottom: 0.5rem; }
+        .text-green-500 { color: #10B981; }
+        .input-filter { border: 1px solid #E5E7EB; border-radius: 0.5rem; padding: 0.75rem 1rem; font-size: 0.95rem; width: 100%; color: #374151; background-color: white; }
+        .input-filter:focus { outline: none; border-color: #F6BE00; box-shadow: 0 0 0 3px rgba(246, 190, 0, 0.1); }
+        .custom-table-header { background-color: #F3F4F6; color: #111827; font-weight: 800; font-size: 0.9rem; text-transform: capitalize; }
+        .custom-table-row { background-color: white; border-bottom: 1px solid #F3F4F6; transition: background-color 0.2s; }
+        .custom-table-row:hover { background-color: #FEFCE8; }
+        .overlay-container { background-color: rgba(107, 114, 128, 0.8); position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: 50; display: flex; align-items: center; justify-content: center; padding: 1rem; }
+        .white-card { background-color: white; border-radius: 1.5rem; box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25); }
+        .suggestion-card { background-color: white; border: 1px solid #F3F4F6; border-radius: 0.75rem; padding: 1.5rem; margin-bottom: 1rem; box-shadow: 0 1px 2px rgba(0,0,0,0.05); }
+        .question-card { background-color: white; border: 1px solid #E5E7EB; border-radius: 0.75rem; padding: 1.5rem; margin-bottom: 1rem; display: flex; justify-content: space-between; align-items: flex-start; transition: all 0.2s; }
+        .question-card:hover { border-color: #F6BE00; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05); }
+        .input-underline { background: transparent; border: none; border-bottom: 2px solid #E5E7EB; border-radius: 0; padding-left: 0; transition: border-color 0.3s ease; font-size: 1rem; color: #374151; height: 3rem; width: 100%; }
+        .input-underline:focus { outline: none; border-bottom-color: #F6BE00; box-shadow: none; }
+        .label-small { font-size: 0.75rem; font-weight: 600; color: #111827; margin-bottom: 0.25rem; }
+    </style>
+</head>
+<body class="h-screen overflow-hidden">
+
+    <!-- ==================== 1. LOGIN PAGE ==================== -->
+    <div id="login-page" class="login-container fixed inset-0 z-50 flex items-center justify-center p-4">
+        <div class="absolute top-6 left-6 md:top-10 md:left-10 opacity-50">
+            <svg width="50" height="50" viewBox="0 0 100 100" fill="none"><circle cx="50" cy="50" r="45" stroke="#F6BE00" stroke-width="8"/><path d="M40 30 L65 50 L40 70" stroke="#F6BE00" stroke-width="8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </div>
+        <div class="login-card w-full max-w-md p-8 md:p-12 flex flex-col items-center text-center relative z-10 fade-in">
+            <h2 class="text-3xl font-bold text-black mb-2">Admin Login</h2>
+            <p class="text-gray-400 text-sm mb-10 px-4 leading-relaxed">Please enter your credentials to access the dashboard.</p>
+            <form class="w-full flex flex-col gap-6" onsubmit="event.preventDefault(); handleLogin();">
+                <div class="form-control w-full"><input type="text" placeholder="Username" class="input input-login w-full" required/></div>
+                <div class="form-control w-full relative">
+                    <input id="password-input" type="password" placeholder="Password" class="input input-login w-full" required/>
+                    <button type="button" onclick="togglePassword()" class="absolute right-0 bottom-3 text-gray-400 hover:text-gray-600"><i data-lucide="eye" id="eye-icon" class="w-5 h-5"></i></button>
+                </div>
+                <button type="submit" class="btn border-none bg-viu-yellow hover-bg-viu-dark text-black font-bold h-12 rounded-full mt-6 text-sm tracking-wider uppercase shadow-md w-full">LOGIN</button>
+                <a href="usersurvey.html" class="text-gray-500 font-bold text-sm hover:text-gray-700 transition-colors cursor-pointer">Cancel</a>
+            </form>
+        </div>
+    </div>
+
+    <!-- ==================== 2. SUBMISSION DETAILS MODAL ==================== -->
+    <div id="submission-modal" class="overlay-container hidden-page">
+        <div class="white-card w-full max-w-4xl max-h-[90vh] overflow-y-auto p-8 md:p-10 relative fade-in">
+            <h2 class="text-3xl font-extrabold text-center mb-10 text-black">Submission Details</h2>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8 border-b border-gray-100 pb-8">
+                <div><p class="text-gray-400 text-xs font-bold uppercase tracking-wider mb-1">Location:</p><p class="font-bold text-xl text-black" id="modal-location">--</p></div>
+                <div><p class="text-gray-400 text-xs font-bold uppercase tracking-wider mb-1">Service Voted:</p><p class="font-bold text-xl text-black uppercase" id="modal-service">--</p></div>
+                <div class="md:col-span-1"><p class="text-gray-400 text-xs font-bold uppercase tracking-wider mb-1">Email:</p><p class="font-bold text-lg text-black" id="modal-email">--</p></div>
+            </div>
+            <h3 class="text-xl font-bold mb-6 text-black">Ratings</h3>
+            <!-- Dynamic Ratings Container -->
+            <div id="modal-ratings-container" class="grid grid-cols-1 md:grid-cols-2 gap-x-16 gap-y-4 mb-8 border-b border-gray-100 pb-8 text-sm md:text-base">
+                <!-- JS will populate this -->
+            </div>
+            <h3 class="text-xl font-bold mb-4 text-black">Suggestion</h3>
+            <div id="modal-suggestion" class="w-full p-4 rounded-xl border border-gray-200 text-gray-700 italic mb-10 bg-gray-50 text-lg">
+                <!-- JS will populate this -->
+            </div>
+            <div class="text-center"><button onclick="closeModal()" class="btn bg-viu-yellow hover-bg-viu-dark border-none text-black font-bold px-12 rounded-full text-sm tracking-widest shadow-md">CLOSE</button></div>
+        </div>
+    </div>
+
+    <!-- ==================== 3. ADD/EDIT QUESTION MODAL ==================== -->
+    <div id="add-question-modal" class="overlay-container hidden-page">
+        <div class="white-card w-full max-w-lg p-8 md:p-10 relative fade-in">
+            <h2 class="text-2xl font-extrabold text-center mb-8 text-black" id="question-modal-title">Add New Question</h2>
+            <input type="hidden" id="q-edit-index" value="-1" /> <!-- Hidden field to track index being edited -->
+            
+            <div class="flex flex-col gap-6 mb-8">
+                <div class="form-control w-full">
+                    <label class="label-small">Main Question Title</label>
+                    <input type="text" id="q-title-input" placeholder="Title" class="input-underline" />
+                </div>
+                <div class="form-control w-full">
+                    <label class="label-small">Sub-text / Hint</label>
+                    <input type="text" id="q-subtitle-input" placeholder="Subtitle" class="input-underline" />
+                </div>
+            </div>
+
+            <div class="text-center flex flex-col gap-3">
+                <button onclick="saveQuestionChanges()" class="btn bg-viu-yellow hover-bg-viu-dark border-none text-black font-bold px-8 rounded-full text-sm tracking-widest shadow-md w-full">SAVE CHANGES</button>
+                <button onclick="closeAddQuestionModal()" class="btn btn-ghost text-gray-500 font-bold text-xs tracking-widest uppercase">Cancel</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- ==================== 4. MAIN APP DASHBOARD ==================== -->
+    <div id="app-container" class="flex h-full hidden-page">
+        
+        <!-- SIDEBAR -->
+        <aside class="w-64 bg-white border-r border-gray-100 flex flex-col h-full shadow-sm z-20">
+            <div class="p-8 pb-8 flex flex-col items-center">
+                <div class="flex flex-col items-center">
+                    <h1 class="text-4xl font-black tracking-tight text-viu-yellow leading-none">viu</h1>
+                    <span class="text.black font-bold tracking-widest text-sm mt-1">ADMIN</span>
+                </div>
+            </div>
+            <nav class="flex-1 px-4 overflow-y-auto">
+                <div onclick="switchTab('dashboard')" id="nav-dashboard" class="sidebar-link active"><i data-lucide="layout-dashboard" class="w-5 h-5"></i> Dashboard</div>
+                <div onclick="switchTab('answers')" id="nav-answers" class="sidebar-link"><i data-lucide="list-checks" class="w-5 h-5"></i> Survey Answers</div>
+                <div onclick="switchTab('suggestions')" id="nav-suggestions" class="sidebar-link"><i data-lucide="message-square-text" class="w-5 h-5"></i> Suggestions</div>
+                <div onclick="switchTab('edit')" id="nav-edit" class="sidebar-link"><i data-lucide="file-edit" class="w-5 h-5"></i> Edit Questions</div>
+            </nav>
+            <div class="p-4 border.t border-gray-100">
+                <div onclick="logout()" class="sidebar-link text-red-500 hover:bg-red-50 hover:text-red-600 cursor.pointer"><i data-lucide="log-out" class="w-5 h-5"></i> Logout</div>
+            </div>
+        </aside>
+
+        <!-- MAIN CONTENT -->
+        <main class="flex-1 overflow-x-hidden overflow-y-auto bg-[#FAFAFA] p-8">
+            
+            <!-- VIEW: DASHBOARD -->
+            <div id="view-dashboard" class="fade-in">
+                <header class="mb-8"><h2 class="text-5xl font-extrabold text-black">Dashboard</h2></header>
+                <div class="dashboard-card mb-6">
+                    <h3 class="text-xl font-bold text.black mb-6">Key Findings</h3>
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                        <div><p class="stat-label">Most Active Location</p><div class="text-lg font-bold text.black flex items-baseline gap-1">PHILIPPINES <span class="text-gray-400 font-normal text-sm">(Simulated)</span></div></div>
+                        <div><p class="stat-label">Area for Improvement</p><div class="text-lg font-bold text.black flex items-baseline gap-1">APP PERFORMANCE <span class="text-gray-400 font-normal text-sm">(2.5)</span></div></div>
+                        <div><p class="stat-label">User Sentiment</p><div class="text-lg font-bold text.green-500">Good</div></div>
+                    </div>
+                </div>
+                <div class="grid grid-cols-1 md:grid.cols-3 gap-6 mb-6">
+                    <div class="dashboard-card flex flex-col items-center justify-center text.center py-10"><p class="stat-label mb-2">Total Submissions</p><p class="text-5xl font-black text-viu-yellow" id="dash-total">0</p></div>
+                    <div class="dashboard-card flex flex-col items.center justify.center text.center py-10"><p class="stat-label mb-2">Average Rating (Overall)</p><p class="text-4xl font-black text.black" id="dash-avg">0.0 <span class="text-2xl text-gray-400 font-semibold">/ 5.0</span></p></div>
+                    <div class="dashboard-card flex flex-col items.center justify.center text.center py-10"><p class="stat-label mb-2">Top Category</p><p class="text-3xl font-black text-viu-yellow uppercase">K-Dramas</p><p class="text-sm text.gray-400 mt-1">Most Popular</p></div>
+                </div>
+                <!-- Charts Area -->
+                <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                    <div class="dashboard-card lg:col-span-2"><h3 class="text-lg font-bold text.black mb-6">Average Ratings per Category</h3><div class="h-80 w-full"><canvas id="barChart"></canvas></div></div>
+                    <div class="dashboard-card"><h3 class="text-lg font-bold text.black mb-6">Satisfaction Distribution</h3><div class="h-80 w-full flex justify.center"><canvas id="pieChart"></canvas></div></div>
+                </div>
+            </div>
+
+            <!-- VIEW: SURVEY ANSWERS -->
+            <div id="view-answers" class="hidden-page fade.in">
+                <header class="mb-8"><h2 class="text-4xl font-extrabold text.black">Survey Answers (Responses)</h2></header>
+                <div class="flex flex-col md:flex.row gap-4 mb-6">
+                    <div class="flex-grow"><input type="text" id="adminSearchInput" placeholder="Search by location, email, or services..." class="input-filter" onkeyup="adminFilterTable()" /></div>
+                    <div class="w-full md:w-64"><select id="adminServiceFilter" class="input-filter cursor-pointer appearance.none bg.white" onchange="adminFilterTable()"><option value="all">Filter by Services (All)</option><option value="movies">Movies</option><option value="kdrama">KDRAMA</option><option value="variety shows">Variety Shows</option></select></div>
+                </div>
+                <div class="text-gray-600 font-medium mb-4" id="adminResultCount">0 Submissions found.</div>
+                <div class="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden">
+                    <table class="w-full text-left border-collapse">
+                        <thead><tr class="custom-table-header h-14"><th class="pl-8 w-24">No.</th><th class="w-1/4">User Location</th><th class="w-1/4">Service Clicked</th><th class="w-1/4">Date</th><th class="pr-8 text-right">View</th></tr></thead>
+                        <tbody class="text.gray-700" id="adminAnswersTableBody">
+                            <!-- JS will populate this -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- VIEW: SUGGESTIONS -->
+            <div id="view-suggestions" class="hidden-page fade.in">
+                <header class="mb-8"><h2 class="text-4xl font-extrabold text.black">User Suggestions & Comments</h2></header>
+                <div id="suggestions-list-container">
+                    <!-- JS will populate this -->
+                </div>
+            </div>
+
+            <!-- VIEW: EDIT QUESTIONS -->
+            <div id="view-edit" class="hidden-page fade.in">
+                <header class="mb-8"><h2 class="text-4xl font-extrabold text.black">Edit Survey Questions</h2></header>
+                
+                <button class="btn bg-viu-yellow hover-bg-viu-dark border.none text.black font-bold rounded.full mb-8 px-6 flex items.center gap-2" onclick="openAddQuestionModal()">
+                    <i data-lucide="plus-circle" class="w-5 h-5"></i> Add New Question
+                </button>
+
+                <!-- Questions List -->
+                <div class="flex flex-col gap-4" id="questions-list-container">
+                    <!-- JS will populate this -->
+                </div>
+            </div>
+
+        </main>
+    </div>
+
+    <script>
+        // ==================== DEFAULT DATA ====================
+        const defaultQuestions = [
+            { title: "Content Variety", subtitle: "How fresh are the latest movies?", rating: 0 },
+            { title: "Streaming Quality", subtitle: "Are the videos smooth and clear?", rating: 0 },
+            { title: "Discovery & Search", subtitle: "Can you easily find new shows/movies?", rating: 0 },
+            { title: "Subtitles & Dubbing", subtitle: "Are the translations accurate and timely?", rating: 0 },
+            { title: "App Performance", subtitle: "How stable and fast is the app (loading times)?", rating: 0 },
+            { title: "Value for Money", subtitle: "Is the subscription worth the content quality?", rating: 0 },
+            { title: "Download Feature", subtitle: "How reliable and easy to use is offline viewing?", rating: 0 },
+            { title: "Ad Experience (If applicable)", subtitle: "Are the advertisements too disruptive?", rating: 0 },
+            { title: "Account Management", subtitle: "Is it easy to manage your subscription/devices?", rating: 0 },
+            { title: "Personalized Recommendations", subtitle: "How accurate are the suggestions based on your taste?", rating: 0 }
+        ];
+
+        let questions = [];
+        let responses = [];
+
+        // ==================== INITIALIZATION ====================
+        document.addEventListener('DOMContentLoaded', () => {
+            lucide.createIcons();
+            
+            // 1. Load Questions
+            const storedQs = localStorage.getItem('viu_survey_questions');
+            questions = storedQs ? JSON.parse(storedQs) : JSON.parse(JSON.stringify(defaultQuestions));
+
+            // 2. Load Responses
+            const storedRs = localStorage.getItem('viu_survey_responses');
+            responses = storedRs ? JSON.parse(storedRs) : [];
+
+            // 3. Initialize Views
+            renderQuestionsList();
+            renderSurveyAnswersTable();
+            renderSuggestions();
+            updateDashboardStats();
+            initCharts(); // Using Chart.js
+        });
+
+        // ==================== AUTH LOGIC ====================
+        function togglePassword() {
+            const input = document.getElementById('password-input');
+            const icon = document.getElementById('eye-icon');
+            if (input.type === "password") { input.type = "text"; icon.style.opacity = '0.5'; } 
+            else { input.type = "password"; icon.style.opacity = '1'; }
+        }
+
+        function handleLogin() {
+            document.getElementById('login-page').classList.add('hidden-page');
+            document.getElementById('app-container').classList.remove('hidden-page');
+            switchTab('dashboard');
+        }
+
+        function logout() {
+            document.getElementById('app-container').classList.add('hidden-page');
+            document.getElementById('login-page').classList.remove('hidden-page');
+            document.querySelectorAll('input').forEach(i => i.value = '');
+        }
+
+        function switchTab(tabName) {
+            document.querySelectorAll('.sidebar-link').forEach(link => link.classList.remove('active'));
+            document.querySelectorAll('main > div').forEach(div => div.classList.add('hidden-page'));
+
+            const navId = 'nav-' + tabName;
+            const viewId = 'view-' + tabName;
+            if(document.getElementById(navId)) document.getElementById(navId).classList.add('active');
+            if(document.getElementById(viewId)) document.getElementById(viewId).classList.remove('hidden-page');
+        }
+
+        // ==================== DASHBOARD LOGIC ====================
+        function updateDashboardStats() {
+            document.getElementById('dash-total').innerText = responses.length;
+            
+            // Calculate Avg
+            if(responses.length === 0) return;
+            let totalScore = 0;
+            let totalQuestions = 0;
+            responses.forEach(r => {
+                r.ratings.forEach(q => {
+                    if(q.rating > 0) { // Only count if answered
+                        totalScore += q.rating;
+                        totalQuestions++;
+                    }
+                });
+            });
+            const avg = totalQuestions > 0 ? (totalScore / totalQuestions).toFixed(2) : '0.00';
+            document.getElementById('dash-avg').innerHTML = `${avg} <span class="text-2xl text-gray-400 font-semibold">/ 5.0</span>`;
+        }
+
+        // ==================== SURVEY ANSWERS LOGIC ====================
+        function renderSurveyAnswersTable() {
+            const tbody = document.getElementById('adminAnswersTableBody');
+            tbody.innerHTML = '';
+            
+            document.getElementById('adminResultCount').innerText = `${responses.length} Submissions found.`;
+
+            responses.forEach((r, index) => {
+                const row = document.createElement('tr');
+                row.className = 'custom-table-row h-16';
+                row.innerHTML = `
+                    <td class="pl-8 font-medium">${index + 1}</td>
+                    <td class="location-cell">${r.country}</td>
+                    <td class="uppercase service-cell">${r.service}</td>
+                    <td>${r.date.split(',')[0]}</td>
+                    <td class="pr-8 text-right">
+                        <button onclick="openSubmissionModal(${index})" class="btn bg-viu-yellow hover-bg-viu-dark border-none text-black btn-sm px-6 font-bold rounded-md">View</button>
+                    </td>
+                `;
+                tbody.appendChild(row);
+            });
+        }
+
+        function openSubmissionModal(index) {
+            const r = responses[index];
+            document.getElementById('modal-location').innerText = r.country;
+            document.getElementById('modal-service').innerText = r.service;
+            document.getElementById('modal-email').innerText = r.email;
+            document.getElementById('modal-suggestion').innerText = r.suggestion || "No suggestion provided.";
+
+            // Populate Ratings
+            const ratingsContainer = document.getElementById('modal-ratings-container');
+            ratingsContainer.innerHTML = '';
+            r.ratings.forEach(q => {
+                ratingsContainer.innerHTML += `
+                    <div class="flex justify-between items-center">
+                        <span class="text-gray-500 font-medium">${q.title}:</span>
+                        <span class="text-viu-yellow font-extrabold text-lg">${q.rating}/5</span>
+                    </div>
+                `;
+            });
+
+            document.getElementById('submission-modal').classList.remove('hidden-page');
+        }
+
+        function closeModal() {
+            document.getElementById('submission-modal').classList.add('hidden-page');
+        }
+
+        function adminFilterTable() {
+            // Re-implement filter logic if needed, or just rely on CSS filtering
+            const searchInput = document.getElementById('adminSearchInput').value.toLowerCase();
+            const rows = document.getElementById('adminAnswersTableBody').getElementsByTagName('tr');
+            for(let row of rows) {
+                const text = row.innerText.toLowerCase();
+                row.style.display = text.includes(searchInput) ? '' : 'none';
+            }
+        }
+
+        // ==================== SUGGESTIONS LOGIC ====================
+        function renderSuggestions() {
+            const container = document.getElementById('suggestions-list-container');
+            container.innerHTML = '';
+            if(responses.length === 0) {
+                container.innerHTML = '<p class="text-gray-400 text-center">No suggestions yet.</p>';
+                return;
+            }
+            responses.forEach(r => {
+                if(r.suggestion) {
+                    container.innerHTML += `
+                        <div class="suggestion-card">
+                            <p class="text-black font-bold italic text-lg mb-4">"${r.suggestion}"</p>
+                            <div class="flex justify-between text-sm text-gray-400">
+                                <span>Location: ${r.country}</span>
+                                <span>On: ${r.date}</span>
+                            </div>
+                        </div>
+                    `;
+                }
+            });
+        }
+
+        // ==================== EDIT QUESTIONS LOGIC ====================
+        function renderQuestionsList() {
+            const container = document.getElementById('questions-list-container');
+            container.innerHTML = '';
+            questions.forEach((q, index) => {
+                const div = document.createElement('div');
+                div.className = 'question-card';
+                div.innerHTML = `
+                    <div>
+                        <h3 class="text-lg font-bold text-black mb-1"><span class="text-viu-yellow mr-1">#${index+1}</span> ${q.title}</h3>
+                        <p class="text-gray-500 text-sm">${q.subtitle}</p>
+                    </div>
+                    <div class="flex items-center gap-4">
+                        <button class="text-gray-400 hover:text-black" onclick="openAddQuestionModal('${q.title}', '${q.subtitle}', ${index})"><i data-lucide="pencil" class="w-5 h-5"></i></button>
+                        <button class="text-red-400 hover:text-red-600" onclick="deleteQuestion(${index})"><i data-lucide="trash-2" class="w-5 h-5"></i></button>
+                    </div>
+                `;
+                container.appendChild(div);
+            });
+            lucide.createIcons();
+        }
+
+        function openAddQuestionModal(title = '', subtitle = '', index = -1) {
+            document.getElementById('q-title-input').value = title;
+            document.getElementById('q-subtitle-input').value = subtitle;
+            document.getElementById('q-edit-index').value = index;
+            document.getElementById('question-modal-title').innerText = index === -1 ? 'Add New Question' : 'Edit Question';
+            document.getElementById('add-question-modal').classList.remove('hidden-page');
+        }
+
+        function closeAddQuestionModal() {
+            document.getElementById('add-question-modal').classList.add('hidden-page');
+        }
+
+        function saveQuestionChanges() {
+            const title = document.getElementById('q-title-input').value;
+            const subtitle = document.getElementById('q-subtitle-input').value;
+            const index = parseInt(document.getElementById('q-edit-index').value);
+
+            if(title && subtitle) {
+                if(index === -1) {
+                    // Add new
+                    questions.push({ title, subtitle, rating: 0 });
+                } else {
+                    // Update existing
+                    questions[index].title = title;
+                    questions[index].subtitle = subtitle;
+                }
+                // Save to Storage
+                localStorage.setItem('viu_survey_questions', JSON.stringify(questions));
+                renderQuestionsList();
+                closeAddQuestionModal();
+                alert('Questions updated! Changes will reflect in the User Survey on reload.');
+            }
+        }
+
+        function deleteQuestion(index) {
+            if(confirm('Are you sure you want to delete this question?')) {s
+                questions.splice(index, 1);
+                localStorage.setItem('viu_survey_questions', JSON.stringify(questions));
+                renderQuestionsList();
+            }
+        }
+
+        // ==================== CHARTS LOGIC ====================
+        function initCharts() {
+            if(typeof Chart === 'undefined') return;
+            // Initialize dummy charts for visual completeness
+            const ctxBar = document.getElementById('barChart')?.getContext('2d');
+            if(ctxBar) new Chart(ctxBar, { type: 'bar', data: { labels: ['A', 'B'], datasets: [{ data: [3, 4], backgroundColor: '#FCD34D' }] } });
+            
+            const ctxPie = document.getElementById('pieChart')?.getContext('2d');
+            if(ctxPie) new Chart(ctxPie, { type: 'pie', data: { labels: ['Sat', 'Unsat'], datasets: [{ data: [10, 5], backgroundColor: ['#F6BE00', '#9CA3AF'] }] } });
+        }
+    </script>
+</body>
+</html>
