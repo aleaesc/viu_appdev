@@ -59,8 +59,8 @@
         .star-icon { width: 3.5rem; height: 3.5rem; color: #E5E7EB; fill: #E5E7EB; transition: all 0.2s ease; cursor: pointer; }
         .star-icon.active { color: #F6BE00; fill: #F6BE00; }
         
-        .big-number { font-size: 8rem; line-height: 1; font-weight: 900; letter-spacing: -0.05em; width: 10rem; text-align: center; }
-        @media (max-width: 768px) { .big-number { font-size: 5rem; margin-bottom: 1rem; width: 7rem; } }
+        .big-number { font-size: 8rem; line-height: 1; font-weight: 900; letter-spacing: -0.05em; }
+        @media (max-width: 768px) { .big-number { font-size: 5rem; margin-bottom: 1rem; } }
 
         .checkbox-viu { width: 1.5rem; height: 1.5rem; border-radius: 0.3rem; border: 2px solid #9CA3AF; }
         .checkbox-viu:checked { background-color: #F6BE00; border-color: #F6BE00; }
@@ -492,7 +492,7 @@
             goToPage('summary-page', 100);
         }
 
-        async function submitSurvey() {
+        function submitSurvey() {
             const country = document.getElementById('user-country').value || 'Unknown';
             const email = document.getElementById('user-email').value || 'N/A';
             const suggestion = document.getElementById('final-comment').value;
@@ -513,27 +513,6 @@
             let allResponses = JSON.parse(localStorage.getItem('viu_survey_responses') || '[]');
             allResponses.push(responseData);
             localStorage.setItem('viu_survey_responses', JSON.stringify(allResponses));
-            // Non-visual backend POST to record in Firestore
-            try {
-                const payload = {
-                    name: (email && email !== 'N/A') ? email.split('@')[0] : undefined,
-                    email: (email && email !== 'N/A') ? email : undefined,
-                    responses: {
-                        country,
-                        service: serviceVoted,
-                        suggestion,
-                        ratings: questions.map(q => ({ title: q.title, rating: q.rating }))
-                    }
-                };
-                await fetch('/api/survey', {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify(payload)
-                });
-            } catch (e) {
-                // silent fail; keep UX unchanged
-            }
-
             goToPage('thank-you-page');
         }
 
