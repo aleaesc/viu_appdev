@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en" data-theme="light">
 <head>
     <meta charset="UTF-8">
@@ -258,11 +258,11 @@
     </div>
 
     <!-- PAGE: THANK YOU -->
-    <div id="thank-you-page" class="w-full min-h-screen flex items-center justify-center bg-white relative hidden-page">
+    <div id="thank-you-page" class="w-full min-h-screen flex flex-col items-center justify-center bg-white relative hidden-page">
         <div class="absolute top-6 left-6 md:top-10 md:left-10">
             <svg width="50" height="50" viewBox="0 0 100 100" fill="none"><circle cx="50" cy="50" r="45" stroke="#F6BE00" stroke-width="8"/><path d="M40 30 L65 50 L40 70" stroke="#F6BE00" stroke-width="8" stroke-linecap="round" stroke-linejoin="round"/></svg>
         </div>
-        <div class="flex flex-col items-center text-center px-6 fade-in">
+        <div class="flex-grow flex flex-col items-center text-center px-6 fade-in">
             <div class="w-32 h-32 bg-viu-yellow rounded-full flex items-center justify-center mb-10 shadow-lg">
                 <svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="black" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
             </div>
@@ -513,6 +513,7 @@
             let allResponses = JSON.parse(localStorage.getItem('viu_survey_responses') || '[]');
             allResponses.push(responseData);
             localStorage.setItem('viu_survey_responses', JSON.stringify(allResponses));
+
             goToPage('thank-you-page');
         }
 
