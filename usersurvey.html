@@ -139,7 +139,7 @@
             <div class="cursor-pointer" onclick="goBack('welcome-page')"><svg width="50" height="50" viewBox="0 0 100 100" fill="none"><circle cx="50" cy="50" r="45" stroke="#F6BE00" stroke-width="8"/><path d="M40 30 L65 50 L40 70" stroke="#F6BE00" stroke-width="8" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
             <div class="flex flex-col items-end gap-1"><div class="flex justify-between w-[150px] text-[10px] font-bold text-gray-400 uppercase"><span>Progress</span><span class="progress-text text-viu-yellow">0%</span></div><div class="progress-container"><div class="progress-fill"></div></div></div>
         </div>
-        <div class="flex-grow flex flex-col items-center justify-center w-full max-w-2xl px-8 fade-in md:-mt-10">
+        <div class="flex-grow flex flex-col items-center justify-center w-full max-w-2xl px-8 fade-in mt-0">
             <h2 class="text-4xl font-bold text-black mb-16 text-center">Welcome to <span class="text-viu-yellow">viu</span></h2>
             <form onsubmit="event.preventDefault(); goToPage('privacy-page', 8);" class="w-full flex flex-col gap-10">
                 <div class="form-control w-full"><label class="label-minimal">Country</label><input list="viu-countries" id="user-country" class="input input-minimal w-full" required placeholder="Select Country"/><datalist id="viu-countries"><option value="Philippines"><option value="Hong Kong"><option value="Singapore"></datalist></div>
@@ -158,8 +158,8 @@
             <div class="cursor-pointer" onclick="goBack('user-details-page', 0)"><svg width="50" height="50" viewBox="0 0 100 100" fill="none"><circle cx="50" cy="50" r="45" stroke="#F6BE00" stroke-width="8"/><path d="M40 30 L65 50 L40 70" stroke="#F6BE00" stroke-width="8" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
             <div class="flex flex-col items-end gap-1"><div class="flex justify-between w-[150px] text-[10px] font-bold text-gray-400 uppercase"><span>Progress</span><span class="progress-text text-viu-yellow">8%</span></div><div class="progress-container"><div class="progress-fill"></div></div></div>
         </div>
-        <div class="flex-grow flex flex-col items-center justify-center w-full max-w-3xl px-4 fade-in md:-mt-10">
-            <div class="bg-white rounded-2xl shadow-xl p-8 md:p-12 w-full border-l-[12px] border-viu-yellow">
+        <div class="flex-grow flex flex-col items-center justify-center w-full max-w-2xl px-4 fade-in mt-0">
+            <div class="bg-white rounded-2xl shadow-xl p-8 md:p-12 w-full border-l-[12px] border-viu-yellow mx-auto">
                 <h2 class="text-3xl md:text-4xl font-bold text-black mb-6">Privacy Matters</h2>
                 <p class="text-gray-500 font-medium text-lg leading-relaxed mb-6">Your responses will remain anonymous unless you choose to share your details.</p>
                 <div class="bg-gray-100 rounded-lg p-4 flex items-center gap-4 cursor-pointer" onclick="document.getElementById('privacy-check').click()">
@@ -180,7 +180,7 @@
             <div class="cursor-pointer" onclick="goBack('privacy-page', 8)"><svg width="50" height="50" viewBox="0 0 100 100" fill="none"><circle cx="50" cy="50" r="45" stroke="#F6BE00" stroke-width="8"/><path d="M40 30 L65 50 L40 70" stroke="#F6BE00" stroke-width="8" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
             <div class="flex flex-col items-end gap-1"><div class="flex justify-between w-[150px] text-[10px] font-bold text-gray-400 uppercase"><span>Progress</span><span class="progress-text text-viu-yellow">17%</span></div><div class="progress-container"><div class="progress-fill"></div></div></div>
         </div>
-        <div class="flex-grow flex flex-col items-center justify-center w-full max-w-4xl px-4 fade-in md:-mt-10 text-center">
+        <div class="flex-grow flex flex-col items-center justify-center w-full max-w-3xl px-4 fade-in mt-0 text-center">
             <h2 class="text-4xl md:text-5xl font-bold text-black mb-3">What do you watch?</h2>
             <p class="text-gray-500 text-lg font-medium mb-12">Select your favorite genres.</p>
             <div class="flex flex-wrap justify-center gap-4 max-w-3xl">
@@ -204,7 +204,7 @@
             <div class="cursor-pointer" onclick="handleQuestionBack()"><svg width="50" height="50" viewBox="0 0 100 100" fill="none"><circle cx="50" cy="50" r="45" stroke="#F6BE00" stroke-width="8"/><path d="M40 30 L65 50 L40 70" stroke="#F6BE00" stroke-width="8" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
             <div class="flex flex-col items-end gap-1"><div class="flex justify-between w-[150px] text-[10px] font-bold text-gray-400 uppercase"><span>Progress</span><span id="q-progress-text" class="progress-text text-viu-yellow">25%</span></div><div class="progress-container"><div id="q-progress-fill" class="progress-fill"></div></div></div>
         </div>
-        <div class="flex-grow flex flex-col md:flex-row items-center justify-center w-full max-w-5xl px-4 fade-in md:-mt-6">
+        <div class="flex-grow flex flex-col md:flex-row items-center justify-center w-full max-w-4xl px-4 fade-in mt-0">
             <div class="flex-shrink-0 mr-0 md:mr-12 mb-6 md:mb-0"><h1 id="q-number" class="big-number text-black">01</h1></div>
             <div class="flex flex-col items-center md:items-start text-center md:text-left">
                 <h2 id="q-title" class="text-4xl md:text-5xl font-bold text-black mb-2">Content Variety</h2>
@@ -227,7 +227,7 @@
             <div class="cursor-pointer" onclick="handleFinalBack()"><svg width="50" height="50" viewBox="0 0 100 100" fill="none"><circle cx="50" cy="50" r="45" stroke="#F6BE00" stroke-width="8"/><path d="M40 30 L65 50 L40 70" stroke="#F6BE00" stroke-width="8" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
             <div class="flex flex-col items-end gap-1"><div class="flex justify-between w-[150px] text-[10px] font-bold text-gray-400 uppercase"><span>Progress</span><span class="progress-text text-viu-yellow">95%</span></div><div class="progress-container"><div class="progress-fill" style="width: 95%"></div></div></div>
         </div>
-        <div class="flex-grow flex flex-col items-center justify-center w-full max-w-4xl px-4 fade-in md:-mt-10">
+        <div class="flex-grow flex flex-col items-center justify-center w-full max-w-3xl px-4 fade-in mt-0">
             <div class="w-full max-w-3xl">
                 <h2 class="text-4xl font-bold text-black mb-8 text-left w-full">Final Thoughts?</h2>
                 <textarea id="final-comment" class="w-full h-64 p-8 rounded-[2rem] border border-gray-100 shadow-sm focus:shadow-md focus:outline-none focus:border-gray-200 resize-none text-xl text-gray-700 placeholder-gray-300 bg-white" placeholder="Tell us what we can do better..."></textarea>
@@ -245,7 +245,7 @@
             <div class="cursor-pointer" onclick="goBack('final-page')"><svg width="50" height="50" viewBox="0 0 100 100" fill="none"><circle cx="50" cy="50" r="45" stroke="#F6BE00" stroke-width="8"/><path d="M40 30 L65 50 L40 70" stroke="#F6BE00" stroke-width="8" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
             <div class="flex flex-col items-end gap-1"><div class="flex justify-between w-[150px] text-[10px] font-bold text-gray-400 uppercase"><span>Progress</span><span class="progress-text text-viu-yellow">100%</span></div><div class="progress-container"><div class="progress-fill" style="width: 100%"></div></div></div>
         </div>
-        <div class="flex-grow flex flex-col items-center justify-center w-full max-w-3xl px-4 fade-in md:-mt-6">
+        <div class="flex-grow flex flex-col items-center justify-center w-full max-w-3xl px-4 fade-in mt-0">
             <h2 class="text-4xl font-bold text-black mb-8 text-center">Ready to Submit?</h2>
             <div class="w-full bg-white rounded-3xl shadow-lg border border-gray-100 overflow-hidden">
                 <div class="max-h-[60vh] overflow-y-auto p-6 md:p-8 space-y-0" id="summary-list"></div>
