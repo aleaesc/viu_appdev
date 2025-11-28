@@ -4,3 +4,11 @@ node_modules/
 .vercel
 *.log
 .env*.local
+# Ignore duplicate artifacts created during editing on Windows
+*(1).html
+*(1).jpg
+*(1).png
+
+# Do not commit local key scratch files
+key.txt
+key_escaped.txt
