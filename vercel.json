@@ -1,8 +1,10 @@
 {
   "cleanUrls": true,
   "trailingSlash": false,
+  "redirects": [
+    { "source": "/", "destination": "/usersurvey.html", "permanent": false }
+  ],
   "rewrites": [
-    { "source": "/", "destination": "/usersurvey.html" },
     { "source": "/admin", "destination": "/admin.html" },
     { "source": "/usersurvey", "destination": "/usersurvey.html" }
   ]
