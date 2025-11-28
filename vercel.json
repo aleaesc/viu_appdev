@@ -2,8 +2,7 @@
   "version": 2,
   "builds": [
     { "src": "api/**/*.js", "use": "@vercel/node" },
-    { "src": "admin.html", "use": "@vercel/static" },
-    { "src": "usersurvey.html", "use": "@vercel/static" }
+    { "src": "public/**", "use": "@vercel/static" }
   ],
   "routes": [
     { "src": "/api/(.*)", "dest": "/api/$1" },
@@ -11,7 +10,4 @@
     { "src": "/usersurvey", "dest": "/usersurvey.html" },
     { "src": "/", "dest": "/usersurvey.html" }
   ]
-}
-{
-  "version": 2
 }
