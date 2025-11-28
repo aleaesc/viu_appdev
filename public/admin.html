@@ -458,3 +458,61 @@
     </script>
 </body>
 </html>
+
+<script>
+// Non-visual wiring: fetch admin list using Basic Auth, render into existing elements
+(function () {
+    const table = document.querySelector('table');
+    const tbody = table ? table.querySelector('tbody') : null;
+    const container = document.getElementById('admin-list') || tbody;
+    if (!container) return;
+
+    async function fetchAdminList() {
+        const username = 'adminalea';
+        const password = 'alea12345';
+        const auth = btoa(username + ':' + password);
+        try {
+            const res = await fetch('/api/admin/list?limit=50', {
+                headers: { 'Authorization': 'Basic ' + auth }
+            });
+            if (!res.ok) throw new Error('Admin list error ' + res.status);
+            const data = await res.json();
+            console.log('Admin list items:', data.items);
+            renderItems(data.items || []);
+        } catch (err) {
+            console.warn('Unable to load admin list.', err);
+        }
+    }
+
+    function renderItems(items) {
+        if (tbody) {
+            tbody.innerHTML = '';
+            items.forEach(it => {
+                const tr = document.createElement('tr');
+                const cols = [it.name || '', it.email || '', it.createdAt || '', JSON.stringify(it.responses || {})];
+                cols.forEach(c => {
+                    const td = document.createElement('td');
+                    td.textContent = c;
+                    tr.appendChild(td);
+                });
+                tbody.appendChild(tr);
+            });
+            return;
+        }
+        // Fallback: append simple list items if no table found
+        container.innerHTML = '';
+        items.forEach(it => {
+            const div = document.createElement('div');
+            div.textContent = `${it.name || ''} | ${it.email || ''} | ${it.createdAt || ''}`;
+            container.appendChild(div);
+        });
+    }
+
+    // Load on DOM ready
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', fetchAdminList);
+    } else {
+        fetchAdminList();
+    }
+})();
+</script>

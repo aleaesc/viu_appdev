@@ -35,6 +35,17 @@ module.exports = async (req, res) => {
       .get();
 
     const items = snapshot.docs.map(d => ({ id: d.id, ...d.data() }));
+    // Log admin access
+    const ip = req.headers['x-forwarded-for']?.split(',')[0].trim() || req.socket?.remoteAddress || 'unknown';
+    const ua = req.headers['user-agent'] || 'unknown';
+    await firestore.collection('logs').add({
+      type: 'admin_list',
+      count: items.length,
+      ip,
+      ua,
+      ts: Date.now()
+    });
+
     return res.status(200).json({ items });
   } catch (err) {
     const status = err.status || 500;

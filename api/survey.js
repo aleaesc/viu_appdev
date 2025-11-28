@@ -18,9 +18,41 @@ module.exports = async (req, res) => {
     const payload = validateDTO(SurveyDTO, { ...body, createdAt: Date.now() });
 
     const { firestore } = initFirebase();
-    const docRef = await firestore.collection('surveys').add(payload);
+    const batch = firestore.batch();
+    const surveysCol = firestore.collection('surveys');
+    const usersCol = firestore.collection('users');
+    const logsCol = firestore.collection('logs');
 
-    return res.status(201).json({ id: docRef.id });
+    const surveyRef = surveysCol.doc();
+    batch.set(surveyRef, payload);
+
+    // Upsert minimal user profile if email provided
+    if (payload.email) {
+      const userRef = usersCol.doc(payload.email);
+      batch.set(userRef, {
+        email: payload.email,
+        lastCountry: payload.country || payload.location || null,
+        lastService: payload.service || null,
+        updatedAt: Date.now()
+      }, { merge: true });
+    }
+
+    // Log submission
+    const ip = req.headers['x-forwarded-for']?.split(',')[0].trim() || req.socket?.remoteAddress || 'unknown';
+    const ua = req.headers['user-agent'] || 'unknown';
+    const logRef = logsCol.doc();
+    batch.set(logRef, {
+      type: 'survey_submit',
+      surveyId: surveyRef.id,
+      email: payload.email || null,
+      ip,
+      ua,
+      ts: Date.now()
+    });
+
+    await batch.commit();
+
+    return res.status(201).json({ id: surveyRef.id });
   } catch (err) {
     const status = err.status || 500;
     const resp = { error: err.message || 'Server error' };
