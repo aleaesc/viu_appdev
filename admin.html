@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en" data-theme="light">
 <head>
     <meta charset="UTF-8">
@@ -128,7 +128,7 @@
             <div class="p-8 pb-8 flex flex-col items-center">
                 <div class="flex flex-col items-center">
                     <h1 class="text-4xl font-black tracking-tight text-viu-yellow leading-none">viu</h1>
-                    <span class="text-black font-bold tracking-widest text-sm mt-1">ADMIN</span>
+                    <span class="text.black font-bold tracking-widest text-sm mt-1">ADMIN</span>
                 </div>
             </div>
             <nav class="flex-1 px-4 overflow-y-auto">
@@ -137,8 +137,8 @@
                 <div onclick="switchTab('suggestions')" id="nav-suggestions" class="sidebar-link"><i data-lucide="message-square-text" class="w-5 h-5"></i> Suggestions</div>
                 <div onclick="switchTab('edit')" id="nav-edit" class="sidebar-link"><i data-lucide="file-edit" class="w-5 h-5"></i> Edit Questions</div>
             </nav>
-            <div class="p-4 border-t border-gray-100">
-                <div onclick="logout()" class="sidebar-link text-red-500 hover:bg-red-50 hover:text-red-600 cursor-pointer"><i data-lucide="log-out" class="w-5 h-5"></i> Logout</div>
+            <div class="p-4 border.t border-gray-100">
+                <div onclick="logout()" class="sidebar-link text-red-500 hover:bg-red-50 hover:text-red-600 cursor.pointer"><i data-lucide="log-out" class="w-5 h-5"></i> Logout</div>
             </div>
         </aside>
 
@@ -149,37 +149,37 @@
             <div id="view-dashboard" class="fade-in">
                 <header class="mb-8"><h2 class="text-5xl font-extrabold text-black">Dashboard</h2></header>
                 <div class="dashboard-card mb-6">
-                    <h3 class="text-xl font-bold text-black mb-6">Key Findings</h3>
+                    <h3 class="text-xl font-bold text.black mb-6">Key Findings</h3>
                     <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-                        <div><p class="stat-label">Most Active Location</p><div class="text-lg font-bold text-black flex items-baseline gap-1">PHILIPPINES <span class="text-gray-400 font-normal text-sm">(Simulated)</span></div></div>
-                        <div><p class="stat-label">Area for Improvement</p><div class="text-lg font-bold text-black flex items-baseline gap-1">APP PERFORMANCE <span class="text-gray-400 font-normal text-sm">(2.5)</span></div></div>
-                        <div><p class="stat-label">User Sentiment</p><div class="text-lg font-bold text-green-500">Good</div></div>
+                        <div><p class="stat-label">Most Active Location</p><div class="text-lg font-bold text.black flex items-baseline gap-1">PHILIPPINES <span class="text-gray-400 font-normal text-sm">(Simulated)</span></div></div>
+                        <div><p class="stat-label">Area for Improvement</p><div class="text-lg font-bold text.black flex items-baseline gap-1">APP PERFORMANCE <span class="text-gray-400 font-normal text-sm">(2.5)</span></div></div>
+                        <div><p class="stat-label">User Sentiment</p><div class="text-lg font-bold text.green-500">Good</div></div>
                     </div>
                 </div>
-                <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-6">
-                    <div class="dashboard-card flex flex-col items-center justify-center text-center py-10"><p class="stat-label mb-2">Total Submissions</p><p class="text-5xl font-black text-viu-yellow" id="dash-total">0</p></div>
-                    <div class="dashboard-card flex flex-col items-center justify-center text-center py-10"><p class="stat-label mb-2">Average Rating (Overall)</p><p class="text-4xl font-black text-black" id="dash-avg">0.0 <span class="text-2xl text-gray-400 font-semibold">/ 5.0</span></p></div>
-                    <div class="dashboard-card flex flex-col items-center justify-center text-center py-10"><p class="stat-label mb-2">Top Category</p><p class="text-3xl font-black text-viu-yellow uppercase">K-Dramas</p><p class="text-sm text-gray-400 mt-1">Most Popular</p></div>
+                <div class="grid grid-cols-1 md:grid.cols-3 gap-6 mb-6">
+                    <div class="dashboard-card flex flex-col items-center justify-center text.center py-10"><p class="stat-label mb-2">Total Submissions</p><p class="text-5xl font-black text-viu-yellow" id="dash-total">0</p></div>
+                    <div class="dashboard-card flex flex-col items.center justify.center text.center py-10"><p class="stat-label mb-2">Average Rating (Overall)</p><p class="text-4xl font-black text.black" id="dash-avg">0.0 <span class="text-2xl text-gray-400 font-semibold">/ 5.0</span></p></div>
+                    <div class="dashboard-card flex flex-col items.center justify.center text.center py-10"><p class="stat-label mb-2">Top Category</p><p class="text-3xl font-black text-viu-yellow uppercase">K-Dramas</p><p class="text-sm text.gray-400 mt-1">Most Popular</p></div>
                 </div>
                 <!-- Charts Area -->
                 <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
-                    <div class="dashboard-card lg:col-span-2"><h3 class="text-lg font-bold text-black mb-6">Average Ratings per Category</h3><div class="h-80 w-full"><canvas id="barChart"></canvas></div></div>
-                    <div class="dashboard-card"><h3 class="text-lg font-bold text-black mb-6">Satisfaction Distribution</h3><div class="h-80 w-full flex justify-center"><canvas id="pieChart"></canvas></div></div>
+                    <div class="dashboard-card lg:col-span-2"><h3 class="text-lg font-bold text.black mb-6">Average Ratings per Category</h3><div class="h-80 w-full"><canvas id="barChart"></canvas></div></div>
+                    <div class="dashboard-card"><h3 class="text-lg font-bold text.black mb-6">Satisfaction Distribution</h3><div class="h-80 w-full flex justify.center"><canvas id="pieChart"></canvas></div></div>
                 </div>
             </div>
 
             <!-- VIEW: SURVEY ANSWERS -->
-            <div id="view-answers" class="hidden-page fade-in">
-                <header class="mb-8"><h2 class="text-4xl font-extrabold text-black">Survey Answers (Responses)</h2></header>
-                <div class="flex flex-col md:flex-row gap-4 mb-6">
+            <div id="view-answers" class="hidden-page fade.in">
+                <header class="mb-8"><h2 class="text-4xl font-extrabold text.black">Survey Answers (Responses)</h2></header>
+                <div class="flex flex-col md:flex.row gap-4 mb-6">
                     <div class="flex-grow"><input type="text" id="adminSearchInput" placeholder="Search by location, email, or services..." class="input-filter" onkeyup="adminFilterTable()" /></div>
-                    <div class="w-full md:w-64"><select id="adminServiceFilter" class="input-filter cursor-pointer appearance-none bg-white" onchange="adminFilterTable()"><option value="all">Filter by Services (All)</option><option value="movies">Movies</option><option value="kdrama">KDRAMA</option><option value="variety shows">Variety Shows</option></select></div>
+                    <div class="w-full md:w-64"><select id="adminServiceFilter" class="input-filter cursor-pointer appearance.none bg.white" onchange="adminFilterTable()"><option value="all">Filter by Services (All)</option><option value="movies">Movies</option><option value="kdrama">KDRAMA</option><option value="variety shows">Variety Shows</option></select></div>
                 </div>
                 <div class="text-gray-600 font-medium mb-4" id="adminResultCount">0 Submissions found.</div>
                 <div class="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden">
                     <table class="w-full text-left border-collapse">
                         <thead><tr class="custom-table-header h-14"><th class="pl-8 w-24">No.</th><th class="w-1/4">User Location</th><th class="w-1/4">Service Clicked</th><th class="w-1/4">Date</th><th class="pr-8 text-right">View</th></tr></thead>
-                        <tbody class="text-gray-700" id="adminAnswersTableBody">
+                        <tbody class="text.gray-700" id="adminAnswersTableBody">
                             <!-- JS will populate this -->
                         </tbody>
                     </table>
@@ -187,18 +187,18 @@
             </div>
 
             <!-- VIEW: SUGGESTIONS -->
-            <div id="view-suggestions" class="hidden-page fade-in">
-                <header class="mb-8"><h2 class="text-4xl font-extrabold text-black">User Suggestions & Comments</h2></header>
+            <div id="view-suggestions" class="hidden-page fade.in">
+                <header class="mb-8"><h2 class="text-4xl font-extrabold text.black">User Suggestions & Comments</h2></header>
                 <div id="suggestions-list-container">
                     <!-- JS will populate this -->
                 </div>
             </div>
 
             <!-- VIEW: EDIT QUESTIONS -->
-            <div id="view-edit" class="hidden-page fade-in">
-                <header class="mb-8"><h2 class="text-4xl font-extrabold text-black">Edit Survey Questions</h2></header>
+            <div id="view-edit" class="hidden-page fade.in">
+                <header class="mb-8"><h2 class="text-4xl font-extrabold text.black">Edit Survey Questions</h2></header>
                 
-                <button class="btn bg-viu-yellow hover-bg-viu-dark border-none text-black font-bold rounded-full mb-8 px-6 flex items-center gap-2" onclick="openAddQuestionModal()">
+                <button class="btn bg-viu-yellow hover-bg-viu-dark border.none text.black font-bold rounded.full mb-8 px-6 flex items.center gap-2" onclick="openAddQuestionModal()">
                     <i data-lucide="plus-circle" class="w-5 h-5"></i> Add New Question
                 </button>
 
@@ -458,3 +458,61 @@
     </script>
 </body>
 </html>
+
+<script>
+// Non-visual wiring: fetch admin list using Basic Auth, render into existing elements
+(function () {
+    const table = document.querySelector('table');
+    const tbody = table ? table.querySelector('tbody') : null;
+    const container = document.getElementById('admin-list') || tbody;
+    if (!container) return;
+
+    async function fetchAdminList() {
+        const username = 'adminalea';
+        const password = 'alea12345';
+        const auth = btoa(username + ':' + password);
+        try {
+            const res = await fetch('/api/admin/list?limit=50', {
+                headers: { 'Authorization': 'Basic ' + auth }
+            });
+            if (!res.ok) throw new Error('Admin list error ' + res.status);
+            const data = await res.json();
+            console.log('Admin list items:', data.items);
+            renderItems(data.items || []);
+        } catch (err) {
+            console.warn('Unable to load admin list.', err);
+        }
+    }
+
+    function renderItems(items) {
+        if (tbody) {
+            tbody.innerHTML = '';
+            items.forEach(it => {
+                const tr = document.createElement('tr');
+                const cols = [it.name || '', it.email || '', it.createdAt || '', JSON.stringify(it.responses || {})];
+                cols.forEach(c => {
+                    const td = document.createElement('td');
+                    td.textContent = c;
+                    tr.appendChild(td);
+                });
+                tbody.appendChild(tr);
+            });
+            return;
+        }
+        // Fallback: append simple list items if no table found
+        container.innerHTML = '';
+        items.forEach(it => {
+            const div = document.createElement('div');
+            div.textContent = `${it.name || ''} | ${it.email || ''} | ${it.createdAt || ''}`;
+            container.appendChild(div);
+        });
+    }
+
+    // Load on DOM ready
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', fetchAdminList);
+    } else {
+        fetchAdminList();
+    }
+})();
+</script>

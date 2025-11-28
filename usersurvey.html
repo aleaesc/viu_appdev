@@ -1,531 +1,589 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en" data-theme="light">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>VIU Client Satisfaction Survey</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>VIU Client Satisfaction Survey</title>
     
-    <!-- Tailwind CSS & DaisyUI -->
-    <link href="https://cdn.jsdelivr.net/npm/daisyui@4.7.2/dist/full.min.css" rel="stylesheet" type="text/css" />
-    <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Tailwind CSS & DaisyUI -->
+  <link href="https://cdn.jsdelivr.net/npm/daisyui@4.7.2/dist/full.min.css" rel="stylesheet" type="text/css" />
+  <script src="https://cdn.tailwindcss.com"></script>
 
-    <!-- Google Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
     
-    <!-- Lucide Icons -->
-    <script src="https://unpkg.com/lucide@latest"></script>
+  <!-- Lucide Icons -->
+  <script src="https://unpkg.com/lucide@latest"></script>
 
-    <style>
-        body {
-            font-family: 'Inter', sans-serif;
-            overflow-x: hidden;
-            background-color: #FAFAFA;
-        }
+  <style>
+    body {
+      font-family: 'Inter', sans-serif;
+      overflow-x: hidden;
+      background-color: #FAFAFA;
+    }
 
-        /* VIU Brand Colors */
-        .bg-viu-yellow { background-color: #F6BE00; }
-        .text-viu-yellow { color: #F6BE00; }
-        .border-viu-yellow { border-color: #F6BE00; }
-        .fill-viu-yellow { fill: #F6BE00; }
-        .stroke-viu-yellow { stroke: #F6BE00; }
-        .hover-bg-viu-dark:hover { background-color: #dca000; }
-        .bg-viu-dark-gray { background-color: #4B4B4B; }
-        .hover-bg-viu-gray-hover:hover { background-color: #333333; }
+    /* VIU Brand Colors */
+    .bg-viu-yellow { background-color: #F6BE00; }
+    .text-viu-yellow { color: #F6BE00; }
+    .border-viu-yellow { border-color: #F6BE00; }
+    .fill-viu-yellow { fill: #F6BE00; }
+    .stroke-viu-yellow { stroke: #F6BE00; }
+    .hover-bg-viu-dark:hover { background-color: #dca000; }
+    .bg-viu-dark-gray { background-color: #4B4B4B; }
+    .hover-bg-viu-gray-hover:hover { background-color: #333333; }
 
-        /* Utility */
-        .hidden-page { display: none !important; }
-        .fade-out { opacity: 0; visibility: hidden; pointer-events: none; transition: opacity 0.5s ease; }
-        .fade-in { animation: fadeIn 0.8s ease-in forwards; }
-        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
-        .glow-bg { background: radial-gradient(circle, rgba(246,190,0,0.15) 0%, rgba(255,255,255,0) 70%); }
+    /* Utility */
+    .hidden-page { display: none !important; }
+    .fade-out { opacity: 0; visibility: hidden; pointer-events: none; transition: opacity 0.5s ease; }
+    .fade-in { animation: fadeIn 0.8s ease-in forwards; }
+    @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+    .glow-bg { background: radial-gradient(circle, rgba(246,190,0,0.15) 0%, rgba(255,255,255,0) 70%); }
 
-        /* Survey Styles */
-        #splash-screen {
-            position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: 9999;
-            background-image: url('bg.jpg'); background-size: cover; background-position: center; 
-            background-color: #F6BE00; transition: opacity 0.8s ease-in-out, visibility 0.8s;
-        }
+    /* Survey Styles */
+    #splash-screen {
+      position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: 9999;
+      background-image: url('bg.jpg'); background-size: cover; background-position: center; 
+      background-color: #F6BE00; transition: opacity 0.8s ease-in-out, visibility 0.8s;
+    }
 
-        .input-minimal {
-            background: transparent; border: none; border-bottom: 2px solid #D1D5DB;
-            border-radius: 0; padding: 0; font-size: 1.125rem; color: #374151; transition: border-color 0.3s ease;
-        }
-        .input-minimal:focus { outline: none; border-bottom-color: #F6BE00; box-shadow: none; }
-        .label-minimal { text-transform: uppercase; font-size: 0.7rem; letter-spacing: 0.05em; color: #9CA3AF; font-weight: 600; margin-bottom: 0.25rem; }
+    .input-minimal {
+      background: transparent; border: none; border-bottom: 2px solid #D1D5DB;
+      border-radius: 0; padding: 0; font-size: 1.125rem; color: #374151; transition: border-color 0.3s ease;
+    }
+    .input-minimal:focus { outline: none; border-bottom-color: #F6BE00; box-shadow: none; }
+    .label-minimal { text-transform: uppercase; font-size: 0.7rem; letter-spacing: 0.05em; color: #9CA3AF; font-weight: 600; margin-bottom: 0.25rem; }
 
-        .progress-container { width: 150px; height: 6px; background-color: #E5E7EB; border-radius: 999px; overflow: hidden; }
-        .progress-fill { height: 100%; background-color: #F6BE00; width: 0%; transition: width 0.5s ease-in-out; }
+    .progress-container { width: 150px; height: 6px; background-color: #E5E7EB; border-radius: 999px; overflow: hidden; }
+    .progress-fill { height: 100%; background-color: #F6BE00; width: 0%; transition: width 0.5s ease-in-out; }
 
-        .star-icon { width: 3.5rem; height: 3.5rem; color: #E5E7EB; fill: #E5E7EB; transition: all 0.2s ease; cursor: pointer; }
-        .star-icon.active { color: #F6BE00; fill: #F6BE00; }
+    .star-icon { width: 3.5rem; height: 3.5rem; color: #E5E7EB; fill: #E5E7EB; transition: all 0.2s ease; cursor: pointer; }
+    .star-icon.active { color: #F6BE00; fill: #F6BE00; }
         
-        .big-number { font-size: 8rem; line-height: 1; font-weight: 900; letter-spacing: -0.05em; }
-        @media (max-width: 768px) { .big-number { font-size: 5rem; margin-bottom: 1rem; } }
+    .big-number { font-size: 8rem; line-height: 1; font-weight: 900; letter-spacing: -0.05em; }
+    @media (max-width: 768px) { .big-number { font-size: 5rem; margin-bottom: 1rem; } }
 
-        .checkbox-viu { width: 1.5rem; height: 1.5rem; border-radius: 0.3rem; border: 2px solid #9CA3AF; }
-        .checkbox-viu:checked { background-color: #F6BE00; border-color: #F6BE00; }
+    .checkbox-viu { width: 1.5rem; height: 1.5rem; border-radius: 0.3rem; border: 2px solid #9CA3AF; }
+    .checkbox-viu:checked { background-color: #F6BE00; border-color: #F6BE00; }
         
-        .genre-pill { border: 1px solid #E5E7EB; background-color: white; color: #4B5563; padding: 0.75rem 1.5rem; border-radius: 9999px; cursor: pointer; transition: all 0.2s ease; font-weight: 500; user-select: none; }
-        .genre-pill:hover { border-color: #F6BE00; color: black; transform: translateY(-2px); }
-        .genre-pill.selected { background-color: #FFF8DC; border-color: #F6BE00; color: black; font-weight: 600; }
+    .genre-pill { border: 1px solid #E5E7EB; background-color: white; color: #4B5563; padding: 0.75rem 1.5rem; border-radius: 9999px; cursor: pointer; transition: all 0.2s ease; font-weight: 500; user-select: none; }
+    .genre-pill:hover { border-color: #F6BE00; color: black; transform: translateY(-2px); }
+    .genre-pill.selected { background-color: #FFF8DC; border-color: #F6BE00; color: black; font-weight: 600; }
 
-        .btn-viu-continue { background-color: #D1D5DB; color: black; border: none; transition: all 0.3s ease; }
-        .btn-viu-continue:hover { background-color: #F6BE00; transform: scale(1.02); }
+    .btn-viu-continue { background-color: #D1D5DB; color: black; border: none; transition: all 0.3s ease; }
+    .btn-viu-continue:hover { background-color: #F6BE00; transform: scale(1.02); }
 
-        /* Chatbot Styles (UPDATED for CENTER POSITION) */
-        .chat-overlay {
-            position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: 10000;
-            display: flex; align-items: center; justify-content: center;
-            background-color: rgba(0, 0, 0, 0.4); /* Dim background slightly */
-            opacity: 0; pointer-events: none; transition: opacity 0.3s ease;
-        }
-        .chat-overlay.visible { opacity: 1; pointer-events: auto; }
+    /* Chatbot Styles (UPDATED for CENTER POSITION) */
+    .chat-overlay {
+      position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: 10000;
+      display: flex; align-items: center; justify-content: center;
+      background-color: rgba(0, 0, 0, 0.4); /* Dim background slightly */
+      opacity: 0; pointer-events: none; transition: opacity 0.3s ease;
+    }
+    .chat-overlay.visible { opacity: 1; pointer-events: auto; }
 
-        #chat-window {
-            width: 90%; max-width: 450px; height: 350px; /* Compact height like image */
-            background: white; border-radius: 12px; overflow: hidden;
-            box-shadow: 0 20px 50px rgba(0,0,0,0.2);
-            display: flex; flex-direction: column;
-            transform: scale(0.9); transition: transform 0.3s ease;
-        }
-        .chat-overlay.visible #chat-window { transform: scale(1); }
+    #chat-window {
+      width: 90%; max-width: 450px; height: 350px; /* Compact height like image */
+      background: white; border-radius: 12px; overflow: hidden;
+      box-shadow: 0 20px 50px rgba(0,0,0,0.2);
+      display: flex; flex-direction: column;
+      transform: scale(0.9); transition: transform 0.3s ease;
+    }
+    .chat-overlay.visible #chat-window { transform: scale(1); }
         
-        .chat-header { 
-            background-color: #F6BE00; padding: 12px 16px; display: flex; justify-content: space-between; align-items: center; color: black; 
-            /* Curved bottom edge simulation */
-            border-bottom-left-radius: 20% 20px; border-bottom-right-radius: 20% 20px;
-            padding-bottom: 20px; margin-bottom: -10px; z-index: 10;
-        }
+    .chat-header { 
+      background-color: #F6BE00; padding: 12px 16px; display: flex; justify-content: space-between; align-items: center; color: black; 
+      /* Curved bottom edge simulation */
+      border-bottom-left-radius: 20% 20px; border-bottom-right-radius: 20% 20px;
+      padding-bottom: 20px; margin-bottom: -10px; z-index: 10;
+    }
         
-        .chat-body { flex: 1; padding: 20px; background-color: #F9FAFB; display: flex; flex-direction: column; gap: 15px; pt-6; }
+    .chat-body { flex: 1; padding: 20px; background-color: #F9FAFB; display: flex; flex-direction: column; gap: 15px; pt-6; }
         
-        .chat-input-area { background: white; padding: 12px 16px; border-top: 1px solid #E5E7EB; display: flex; align-items: center; gap: 10px; }
-        .chat-input { flex-grow: 1; background: #F3F4F6; border-radius: 8px; padding: 10px 14px; font-size: 0.9rem; outline: none; color: #4B5563; }
+    .chat-input-area { background: white; padding: 12px 16px; border-top: 1px solid #E5E7EB; display: flex; align-items: center; gap: 10px; }
+    .chat-input { flex-grow: 1; background: #F3F4F6; border-radius: 8px; padding: 10px 14px; font-size: 0.9rem; outline: none; color: #4B5563; }
         
-        .chat-bubble-bot { 
-            display: flex; align-items: center; gap: 10px;
-            background: #E5E7EB; color: black; padding: 12px 16px; border-radius: 20px; 
-            border-top-left-radius: 4px; font-size: 0.95rem; font-weight: 500;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
-        }
-        .chat-avatar { width: 32px; height: 32px; border-radius: 50%; }
-    </style>
+    .chat-bubble-bot { 
+      display: flex; align.items: center; gap: 10px;
+      background: #E5E7EB; color: black; padding: 12px 16px; border-radius: 20px; 
+      border-top-left-radius: 4px; font-size: 0.95rem; font-weight: 500;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+    }
+    .chat-avatar { width: 32px; height: 32px; border-radius: 50%; }
+  </style>
 </head>
 <body class="bg-gray-50 text-gray-800 min-h-screen relative">
 
-    <!-- SPLASH -->
-    <div id="splash-screen"></div>
+  <!-- SPLASH -->
+  <div id="splash-screen"></div>
 
-    <!-- PAGE: WELCOME -->
-    <div id="welcome-page" class="w-full min-h-screen flex flex-col relative opacity-0 transition-opacity duration-1000 bg-white">
-        <div class="absolute top-6 left-6 md:top-10 md:left-10">
-            <svg width="50" height="50" viewBox="0 0 100 100" fill="none"><circle cx="50" cy="50" r="45" stroke="#F6BE00" stroke-width="8"/><path d="M40 30 L65 50 L40 70" stroke="#F6BE00" stroke-width="8" stroke-linecap="round" stroke-linejoin="round"/></svg>
-        </div>
-        <div class="flex-grow flex flex-col items-center justify-center px-4">
-            <div class="w-full max-w-3xl flex flex-col items-center text-center glow-bg py-20 rounded-full">
-                <h1 class="text-5xl md:text-6xl font-extrabold tracking-tight leading-tight"><span class="text-black">Shape the</span><br><span class="text-viu-yellow">Viu Experience</span></h1>
-                <p class="mt-6 text-gray-500 text-lg md:text-xl max-w-2xl font-medium">Help us curate the next generation of Asian entertainment.</p>
-                <div class="mt-10 flex flex-col gap-4 w-full max-w-xs">
-                    <button onclick="goToPage('user-details-page', 0)" class="btn border-none bg-viu-yellow hover-bg-viu-dark text-black text-lg font-bold px-8 h-14 rounded-xl shadow-md transform transition hover:scale-105 flex items-center justify-center gap-2 group">Start Survey <i data-lucide="arrow-right" class="w-5 h-5"></i></button>
-                    <a href="admin.html" class="btn bg-gray-50 hover:bg-gray-100 border border-gray-200 text-gray-500 font-semibold h-12 rounded-xl shadow-sm flex items-center justify-center gap-2 no-underline"><i data-lucide="lock" class="w-4 h-4"></i>Admin Access</a>
-                </div>
-            </div>
-        </div>
+  <!-- PAGE: WELCOME -->
+  <div id="welcome-page" class="w-full min-h-screen flex flex-col relative opacity-0 transition-opacity duration-1000 bg-white">
+    <div class="absolute top-6 left-6 md:top-10 md:left-10">
+      <svg width="50" height="50" viewBox="0 0 100 100" fill="none"><circle cx="50" cy="50" r="45" stroke="#F6BE00" stroke-width="8"/><path d="M40 30 L65 50 L40 70" stroke="#F6BE00" stroke-width="8" stroke-linecap="round" stroke-linejoin="round"/></svg>
     </div>
-
-    <!-- PAGE: USER DETAILS -->
-    <div id="user-details-page" class="w-full min-h-screen flex flex-col items-center bg-gray-50 relative hidden-page">
-        <div class="w-full flex justify-between items-center p-6 md:p-10">
-            <div class="cursor-pointer" onclick="goBack('welcome-page')"><svg width="50" height="50" viewBox="0 0 100 100" fill="none"><circle cx="50" cy="50" r="45" stroke="#F6BE00" stroke-width="8"/><path d="M40 30 L65 50 L40 70" stroke="#F6BE00" stroke-width="8" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
-            <div class="flex flex-col items-end gap-1"><div class="flex justify-between w-[150px] text-[10px] font-bold text-gray-400 uppercase"><span>Progress</span><span class="progress-text text-viu-yellow">0%</span></div><div class="progress-container"><div class="progress-fill"></div></div></div>
+    <div class="flex-grow flex flex-col items-center justify-center px-4">
+      <div class="w-full max-w-3xl flex flex-col items-center text-center glow-bg py-20 rounded-full">
+        <h1 class="text-5xl md:text-6xl font-extrabold tracking-tight leading-tight"><span class="text-black">Shape the</span><br><span class="text-viu-yellow">Viu Experience</span></h1>
+        <p class="mt-6 text-gray-500 text-lg md:text-xl max-w-2xl font-medium">Help us curate the next generation of Asian entertainment.</p>
+        <div class="mt-10 flex flex-col gap-4 w-full max-w-xs">
+          <button onclick="goToPage('user-details-page', 0)" class="btn border-none bg-viu-yellow hover-bg-viu-dark text-black text-lg font-bold px-8 h-14 rounded-xl shadow-md transform transition hover:scale-105 flex items-center justify-center gap-2 group">Start Survey <i data-lucide="arrow-right" class="w-5 h-5"></i></button>
+          <a href="admin.html" class="btn bg-gray-50 hover:bg-gray-100 border border-gray-200 text-gray-500 font-semibold h-12 rounded-xl shadow-sm flex items-center justify-center gap-2 no-underline"><i data-lucide="lock" class="w-4 h-4"></i>Admin Access</a>
         </div>
-        <div class="flex-grow flex flex-col items-center justify-center w-full max-w-2xl px-8 fade-in -mt-20">
-            <h2 class="text-4xl font-bold text-black mb-16 text-center">Welcome to <span class="text-viu-yellow">viu</span></h2>
-            <form onsubmit="event.preventDefault(); goToPage('privacy-page', 8);" class="w-full flex flex-col gap-10">
-                <div class="form-control w-full"><label class="label-minimal">Country</label><input list="viu-countries" id="user-country" class="input input-minimal w-full" required placeholder="Select Country"/><datalist id="viu-countries"><option value="Philippines"><option value="Hong Kong"><option value="Singapore"></datalist></div>
-                <div class="form-control w-full"><label class="label-minimal">Email (Optional)</label><input type="email" id="user-email" class="input input-minimal w-full" placeholder="Enter email"/></div>
-                <div class="flex items-center justify-center gap-4 mt-8">
-                    <button type="button" onclick="goBack('welcome-page')" class="btn bg-viu-dark-gray hover-bg-viu-gray-hover border-none text-white rounded-full px-8 h-12 font-bold text-xs tracking-widest flex items-center gap-2"><i data-lucide="arrow-left" class="w-4 h-4"></i>BACK</button>
-                    <button type="submit" class="btn btn-viu-continue border-none rounded-full px-8 h-12 font-bold text-xs tracking-widest flex items-center gap-2">CONTINUE <i data-lucide="arrow-right" class="w-4 h-4"></i></button>
-                </div>
-            </form>
-        </div>
+      </div>
     </div>
+  </div>
 
-    <!-- PAGE: PRIVACY -->
-    <div id="privacy-page" class="w-full min-h-screen flex flex-col items-center bg-gray-50 relative hidden-page">
-        <div class="w-full flex justify-between items-center p-6 md:p-10">
-            <div class="cursor-pointer" onclick="goBack('user-details-page', 0)"><svg width="50" height="50" viewBox="0 0 100 100" fill="none"><circle cx="50" cy="50" r="45" stroke="#F6BE00" stroke-width="8"/><path d="M40 30 L65 50 L40 70" stroke="#F6BE00" stroke-width="8" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
-            <div class="flex flex-col items-end gap-1"><div class="flex justify-between w-[150px] text-[10px] font-bold text-gray-400 uppercase"><span>Progress</span><span class="progress-text text-viu-yellow">8%</span></div><div class="progress-container"><div class="progress-fill"></div></div></div>
-        </div>
-        <div class="flex-grow flex flex-col items-center justify-center w-full max-w-3xl px-4 fade-in -mt-20">
-            <div class="bg-white rounded-2xl shadow-xl p-8 md:p-12 w-full border-l-[12px] border-viu-yellow">
-                <h2 class="text-3xl md:text-4xl font-bold text-black mb-6">Privacy Matters</h2>
-                <p class="text-gray-500 font-medium text-lg leading-relaxed mb-6">Your responses will remain anonymous unless you choose to share your details.</p>
-                <div class="bg-gray-100 rounded-lg p-4 flex items-center gap-4 cursor-pointer" onclick="document.getElementById('privacy-check').click()">
-                    <input type="checkbox" id="privacy-check" class="checkbox checkbox-viu bg-white"/>
-                    <label for="privacy-check" class="text-gray-600 font-semibold cursor-pointer">I accept the privacy policy</label>
-                </div>
-            </div>
-            <div class="flex items-center justify-center gap-4 mt-12">
-                <button type="button" onclick="goBack('user-details-page', 0)" class="btn bg-viu-dark-gray hover-bg-viu-gray-hover border-none text-white rounded-full px-8 h-12 font-bold text-xs tracking-widest flex items-center gap-2"><i data-lucide="arrow-left" class="w-4 h-4"></i>BACK</button>
-                <button type="button" onclick="handlePrivacyContinue()" class="btn btn-viu-continue border-none rounded-full px-8 h-12 font-bold text-xs tracking-widest flex items-center gap-2">CONTINUE <i data-lucide="arrow-right" class="w-4 h-4"></i></button>
-            </div>
-        </div>
+  <!-- PAGE: USER DETAILS -->
+  <div id="user-details-page" class="w-full min-h-screen flex flex-col items-center bg-gray-50 relative hidden-page">
+    <div class="w-full flex justify-between items-center p-6 md:p-10">
+      <div class="cursor.pointer" onclick="goBack('welcome-page')"><svg width="50" height="50" viewBox="0 0 100 100" fill="none"><circle cx="50" cy="50" r="45" stroke="#F6BE00" stroke-width="8"/><path d="M40 30 L65 50 L40 70" stroke="#F6BE00" stroke-width="8" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+      <div class="flex flex-col items.end gap-1"><div class="flex justify.between w-[150px] text-[10px] font.bold text-gray-400 uppercase"><span>Progress</span><span class="progress.text text-viu-yellow">0%</span></div><div class="progress-container"><div class="progress-fill"></div></div></div>
     </div>
-
-    <!-- PAGE: GENRE -->
-    <div id="genre-page" class="w-full min-h-screen flex flex-col items-center bg-gray-50 relative hidden-page">
-        <div class="w-full flex justify-between items-center p-6 md:p-10">
-            <div class="cursor-pointer" onclick="goBack('privacy-page', 8)"><svg width="50" height="50" viewBox="0 0 100 100" fill="none"><circle cx="50" cy="50" r="45" stroke="#F6BE00" stroke-width="8"/><path d="M40 30 L65 50 L40 70" stroke="#F6BE00" stroke-width="8" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
-            <div class="flex flex-col items-end gap-1"><div class="flex justify-between w-[150px] text-[10px] font-bold text-gray-400 uppercase"><span>Progress</span><span class="progress-text text-viu-yellow">17%</span></div><div class="progress-container"><div class="progress-fill"></div></div></div>
+    <div class="flex-grow flex flex-col items-center justify.center w-full max-w-2xl px-8 fade-in -mt-20">
+      <h2 class="text-4xl font-bold text.black mb-16 text.center">Welcome to <span class="text-viu-yellow">viu</span></h2>
+      <form onsubmit="event.preventDefault(); goToPage('privacy-page', 8);" class="w-full flex flex-col gap-10">
+        <div class="form-control w-full"><label class="label-minimal">Country</label><input list="viu-countries" id="user-country" class="input input-minimal w-full" required placeholder="Select Country"/><datalist id="viu-countries"><option value="Philippines"><option value="Hong Kong"><option value="Singapore"></datalist></div>
+        <div class="form-control w-full"><label class="label-minimal">Email (Optional)</label><input type="email" id="user-email" class="input input-minimal w-full" placeholder="Enter email"/></div>
+        <div class="flex items.center justify.center gap-4 mt-8">
+          <button type="button" onclick="goBack('welcome-page')" class="btn bg-viu-dark-gray hover-bg-viu-gray-hover border-none text.white rounded.full px-8 h-12 font-bold text-xs tracking-widest flex items.center gap-2"><i data-lucide="arrow-left" class="w-4 h-4"></i>BACK</button>
+          <button type="submit" class="btn btn-viu-continue border.none rounded.full px-8 h-12 font-bold text-xs tracking.widest flex items.center gap-2">CONTINUE <i data-lucide="arrow-right" class="w-4 h-4"></i></button>
         </div>
-        <div class="flex-grow flex flex-col items-center justify-center w-full max-w-4xl px-4 fade-in -mt-20 text-center">
-            <h2 class="text-4xl md:text-5xl font-bold text-black mb-3">What do you watch?</h2>
-            <p class="text-gray-500 text-lg font-medium mb-12">Select your favorite genres.</p>
-            <div class="flex flex-wrap justify-center gap-4 max-w-3xl">
-                <div class="genre-pill" onclick="toggleGenre(this)">K-Dramas</div>
-                <div class="genre-pill" onclick="toggleGenre(this)">Movies</div>
-                <div class="genre-pill" onclick="toggleGenre(this)">Variety Shows</div>
-                <div class="genre-pill" onclick="toggleGenre(this)">Anime</div>
-                <div class="genre-pill" onclick="toggleGenre(this)">Thai Drama</div>
-                <div class="genre-pill" onclick="toggleGenre(this)">Others</div>
-            </div>
-            <div class="flex items-center justify-center gap-4 mt-16">
-                <button type="button" onclick="goBack('privacy-page', 8)" class="btn bg-viu-dark-gray hover-bg-viu-gray-hover border-none text-white rounded-full px-8 h-12 font-bold text-xs tracking-widest flex items-center gap-2"><i data-lucide="arrow-left" class="w-4 h-4"></i>BACK</button>
-                <button type="button" onclick="startQuestions()" class="btn btn-viu-continue border-none rounded-full px-8 h-12 font-bold text-xs tracking-widest flex items-center gap-2">CONTINUE <i data-lucide="arrow-right" class="w-4 h-4"></i></button>
-            </div>
-        </div>
+      </form>
     </div>
+  </div>
 
-    <!-- PAGE: QUESTIONS -->
-    <div id="question-page" class="w-full min-h-screen flex flex-col items-center bg-gray-50 relative hidden-page">
-        <div class="w-full flex justify-between items-center p-6 md:p-10">
-            <div class="cursor-pointer" onclick="handleQuestionBack()"><svg width="50" height="50" viewBox="0 0 100 100" fill="none"><circle cx="50" cy="50" r="45" stroke="#F6BE00" stroke-width="8"/><path d="M40 30 L65 50 L40 70" stroke="#F6BE00" stroke-width="8" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
-            <div class="flex flex-col items-end gap-1"><div class="flex justify-between w-[150px] text-[10px] font-bold text-gray-400 uppercase"><span>Progress</span><span id="q-progress-text" class="progress-text text-viu-yellow">25%</span></div><div class="progress-container"><div id="q-progress-fill" class="progress-fill"></div></div></div>
-        </div>
-        <div class="flex-grow flex flex-col md:flex-row items-center justify-center w-full max-w-5xl px-4 fade-in -mt-20">
-            <div class="flex-shrink-0 mr-0 md:mr-12 mb-6 md:mb-0"><h1 id="q-number" class="big-number text-black">01</h1></div>
-            <div class="flex flex-col items-center md:items-start text-center md:text-left">
-                <h2 id="q-title" class="text-4xl md:text-5xl font-bold text-black mb-2">Content Variety</h2>
-                <p id="q-subtitle" class="text-gray-500 text-lg md:text-xl mb-10">How fresh are the latest movies?</p>
-                <div class="flex flex-col w-fit mx-auto md:mx-0">
-                    <div class="flex gap-2 md:gap-4 mb-3" id="star-container"></div>
-                    <div class="flex justify-between w-full px-1 text-[10px] md:text-xs font-bold text-gray-400 tracking-widest uppercase"><span>Poor</span><span>Perfect</span></div>
-                </div>
-            </div>
-        </div>
-        <div class="w-full flex items-center justify-center gap-4 mb-10 md:mb-16">
-            <button type="button" onclick="handleQuestionBack()" class="btn bg-viu-dark-gray hover-bg-viu-gray-hover border-none text-white rounded-full px-8 h-12 font-bold text-xs tracking-widest flex items-center gap-2"><i data-lucide="arrow-left" class="w-4 h-4"></i>BACK</button>
-            <button type="button" onclick="nextQuestion()" class="btn btn-viu-continue border-none rounded-full px-8 h-12 font-bold text-xs tracking-widest flex items-center gap-2">CONTINUE <i data-lucide="arrow-right" class="w-4 h-4"></i></button>
-        </div>
+  <!-- PAGE: PRIVACY -->
+  <div id="privacy-page" class="w-full min-h-screen flex flex-col items-center bg-gray-50 relative hidden-page">
+    <div class="w-full flex justify.between items.center p-6 md:p-10">
+      <div class="cursor.pointer" onclick="goBack('user-details-page', 0)"><svg width="50" height="50" viewBox="0 0 100 100" fill="none"><circle cx="50" cy="50" r="45" stroke="#F6BE00" stroke-width="8"/><path d="M40 30 L65 50 L40 70" stroke="#F6BE00" stroke-width="8" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+      <div class="flex flex-col items.end gap-1"><div class="flex justify.between w-[150px] text-[10px] font.bold text.gray-400 uppercase"><span>Progress</span><span class="progress-text text-viu-yellow">8%</span></div><div class="progress-container"><div class="progress-fill"></div></div></div>
     </div>
-
-    <!-- PAGE: FINAL -->
-    <div id="final-page" class="w-full min-h-screen flex flex-col items-center bg-gray-50 relative hidden-page">
-        <div class="w-full flex justify-between items-center p-6 md:p-10">
-            <div class="cursor-pointer" onclick="handleFinalBack()"><svg width="50" height="50" viewBox="0 0 100 100" fill="none"><circle cx="50" cy="50" r="45" stroke="#F6BE00" stroke-width="8"/><path d="M40 30 L65 50 L40 70" stroke="#F6BE00" stroke-width="8" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
-            <div class="flex flex-col items-end gap-1"><div class="flex justify-between w-[150px] text-[10px] font-bold text-gray-400 uppercase"><span>Progress</span><span class="progress-text text-viu-yellow">95%</span></div><div class="progress-container"><div class="progress-fill" style="width: 95%"></div></div></div>
+    <div class="flex-grow flex flex.col items.center justify.center w.full max-w-3xl px-4 fade-in -mt-20">
+      <div class="bg-white rounded-2xl shadow-xl p-8 md:p-12 w-full border-l-[12px] border-viu-yellow">
+        <h2 class="text-3xl md:text-4xl font-bold text.black mb-6">Privacy Matters</h2>
+        <p class="text.gray-500 font-medium text-lg leading-relaxed mb-6">Your responses will remain anonymous unless you choose to share your details.</p>
+        <div class="bg.gray-100 rounded-lg p-4 flex items.center gap-4 cursor.pointer" onclick="document.getElementById('privacy-check').click()">
+          <input type="checkbox" id="privacy-check" class="checkbox checkbox-viu bg.white"/>
+          <label for="privacy-check" class="text.gray-600 font-semibold cursor.pointer">I accept the privacy policy</label>
         </div>
-        <div class="flex-grow flex flex-col items-center justify-center w-full max-w-4xl px-4 fade-in -mt-20">
-            <div class="w-full max-w-3xl">
-                <h2 class="text-4xl font-bold text-black mb-8 text-left w-full">Final Thoughts?</h2>
-                <textarea id="final-comment" class="w-full h-64 p-8 rounded-[2rem] border border-gray-100 shadow-sm focus:shadow-md focus:outline-none focus:border-gray-200 resize-none text-xl text-gray-700 placeholder-gray-300 bg-white" placeholder="Tell us what we can do better..."></textarea>
-            </div>
-            <div class="flex items-center justify-center gap-4 mt-12">
-                <button type="button" onclick="handleFinalBack()" class="btn bg-viu-dark-gray hover-bg-viu-gray-hover border-none text-white rounded-full px-8 h-12 font-bold text-xs tracking-widest flex items-center gap-2"><i data-lucide="arrow-left" class="w-4 h-4"></i>BACK</button>
-                <button type="button" onclick="goToSummary()" class="btn btn-viu-continue border-none rounded-full px-8 h-12 font-bold text-xs tracking-widest flex items-center gap-2">CONTINUE <i data-lucide="arrow-right" class="w-4 h-4"></i></button>
-            </div>
-        </div>
+      </div>
+      <div class="flex items.center justify.center gap-4 mt-12">
+        <button type="button" onclick="goBack('user-details-page', 0)" class="btn bg-viu-dark-gray hover-bg-viu-gray-hover border.none text.white rounded.full px-8 h-12 font-bold text-xs tracking-widest flex items.center gap-2"><i data-lucide="arrow-left" class="w-4 h-4"></i>BACK</button>
+        <button type="button" onclick="handlePrivacyContinue()" class="btn btn-viu-continue border.none rounded.full px-8 h-12 font-bold text-xs tracking.widest flex items.center gap-2">CONTINUE <i data-lucide="arrow-right" class="w-4 h-4"></i></button>
+      </div>
     </div>
+  </div>
 
-    <!-- PAGE: SUMMARY -->
-    <div id="summary-page" class="w-full min-h-screen flex flex-col items-center bg-gray-50 relative hidden-page">
-        <div class="w-full flex justify-between items-center p-6 md:p-10">
-            <div class="cursor-pointer" onclick="goBack('final-page')"><svg width="50" height="50" viewBox="0 0 100 100" fill="none"><circle cx="50" cy="50" r="45" stroke="#F6BE00" stroke-width="8"/><path d="M40 30 L65 50 L40 70" stroke="#F6BE00" stroke-width="8" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
-            <div class="flex flex-col items-end gap-1"><div class="flex justify-between w-[150px] text-[10px] font-bold text-gray-400 uppercase"><span>Progress</span><span class="progress-text text-viu-yellow">100%</span></div><div class="progress-container"><div class="progress-fill" style="width: 100%"></div></div></div>
-        </div>
-        <div class="flex-grow flex flex-col items-center justify-center w-full max-w-3xl px-4 fade-in -mt-10">
-            <h2 class="text-4xl font-bold text-black mb-8 text-center">Ready to Submit?</h2>
-            <div class="w-full bg-white rounded-3xl shadow-lg border border-gray-100 overflow-hidden">
-                <div class="max-h-[60vh] overflow-y-auto p-6 md:p-8 space-y-0" id="summary-list"></div>
-            </div>
-            <div class="flex items-center justify-center gap-4 mt-8">
-                <button type="button" onclick="goBack('final-page')" class="btn bg-viu-dark-gray hover-bg-viu-gray-hover border-none text-white rounded-full px-8 h-12 font-bold text-xs tracking-widest flex items-center gap-2"><i data-lucide="arrow-left" class="w-4 h-4"></i>BACK</button>
-                <button type="button" onclick="submitSurvey()" class="btn btn-viu-continue border-none rounded-full px-8 h-12 font-bold text-xs tracking-widest flex items-center gap-2">SUBMIT <i data-lucide="check" class="w-4 h-4"></i></button>
-            </div>
-        </div>
+  <!-- PAGE: GENRE -->
+  <div id="genre-page" class="w-full min-h-screen flex flex.col items.center bg-gray-50 relative hidden-page">
+    <div class="w-full flex justify.between items.center p-6 md:p-10">
+      <div class="cursor.pointer" onclick="goBack('privacy-page', 8)"><svg width="50" height="50" viewBox="0 0 100 100" fill="none"><circle cx="50" cy="50" r="45" stroke="#F6BE00" stroke-width="8"/><path d="M40 30 L65 50 L40 70" stroke="#F6BE00" stroke-width="8" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+      <div class="flex flex-col items.end gap-1"><div class="flex justify.between w-[150px] text-[10px] font.bold text.gray-400 uppercase"><span>Progress</span><span class="progress-text text-viu-yellow">17%</span></div><div class="progress-container"><div class="progress-fill"></div></div></div>
     </div>
-
-    <!-- PAGE: THANK YOU -->
-    <div id="thank-you-page" class="w-full min-h-screen flex flex-col items-center justify-center bg-white relative hidden-page">
-        <div class="absolute top-6 left-6 md:top-10 md:left-10">
-            <svg width="50" height="50" viewBox="0 0 100 100" fill="none"><circle cx="50" cy="50" r="45" stroke="#F6BE00" stroke-width="8"/><path d="M40 30 L65 50 L40 70" stroke="#F6BE00" stroke-width="8" stroke-linecap="round" stroke-linejoin="round"/></svg>
-        </div>
-        <div class="flex-grow flex flex-col items-center text-center px-6 fade-in">
-            <div class="w-32 h-32 bg-viu-yellow rounded-full flex items-center justify-center mb-10 shadow-lg">
-                <svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="black" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
-            </div>
-            <h2 class="text-4xl md:text-5xl font-bold text-black mb-6">Thank you so much!</h2>
-            <p class="text-gray-500 text-xl font-medium mb-16">Your feedback has been recorded.</p>
-            <button onclick="resetSurvey()" class="text-viu-yellow font-bold text-lg tracking-widest uppercase border-b-2 border-viu-yellow pb-1 hover:text-yellow-500 hover:border-yellow-500 transition-colors">BACK TO HOME</button>
-        </div>
+    <div class="flex-grow flex flex-col items.center justify.center w-full max-w-4xl px-4 fade-in -mt-20 text.center">
+      <h2 class="text-4xl md:text-5xl font-bold text.black mb-3">What do you watch?</h2>
+      <p class="text.gray-500 text-lg font-medium mb-12">Select your favorite genres.</p>
+      <div class="flex flex-wrap justify.center gap-4 max-w-3xl">
+        <div class="genre-pill" onclick="toggleGenre(this)">K-Dramas</div>
+        <div class="genre-pill" onclick="toggleGenre(this)">Movies</div>
+        <div class="genre-pill" onclick="toggleGenre(this)">Variety Shows</div>
+        <div class="genre-pill" onclick="toggleGenre(this)">Anime</div>
+        <div class="genre-pill" onclick="toggleGenre(this)">Thai Drama</div>
+        <div class="genre-pill" onclick="toggleGenre(this)">Others</div>
+      </div>
+      <div class="flex items.center justify.center gap-4 mt-16">
+        <button type="button" onclick="goBack('privacy-page', 8)" class="btn bg-viu-dark-gray hover-bg-viu-gray-hover border.none text.white rounded.full px-8 h-12 font-bold text-xs tracking.widest flex items.center gap-2"><i data-lucide="arrow-left" class="w-4 h-4"></i>BACK</button>
+        <button type="button" onclick="startQuestions()" class="btn btn-viu-continue border.none rounded.full px-8 h-12 font-bold text-xs tracking.widest flex items.center gap-2">CONTINUE <i data-lucide="arrow-right" class="w-4 h-4"></i></button>
+      </div>
     </div>
+  </div>
 
-    <!-- ==================== CHATBOT SECTION ==================== -->
+  <!-- PAGE: QUESTIONS -->
+  <div id="question-page" class="w-full min-h-screen flex flex.col items.center bg-gray-50 relative hidden-page">
+    <div class="w-full flex justify.between items.center p-6 md:p-10">
+      <div class="cursor.pointer" onclick="handleQuestionBack()"><svg width="50" height="50" viewBox="0 0 100 100" fill="none"><circle cx="50" cy="50" r="45" stroke="#F6BE00" stroke-width="8"/><path d="M40 30 L65 50 L40 70" stroke="#F6BE00" stroke-width="8" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+      <div class="flex flex-col items.end gap-1"><div class="flex justify.between w-[150px] text-[10px] font.bold text.gray-400 uppercase"><span>Progress</span><span id="q-progress-text" class="progress-text text-viu-yellow">25%</span></div><div class="progress-container"><div id="q-progress-fill" class="progress-fill"></div></div></div>
+    </div>
+    <div class="flex-grow flex flex.col md:flex-row items.center justify.center w-full max-w-5xl px-4 fade-in -mt-20">
+      <div class="flex-shrink-0 mr-0 md:mr-12 mb-6 md:mb-0"><h1 id="q-number" class="big-number text.black">01</h1></div>
+      <div class="flex flex-col items.center md:items-start text.center md:text-left">
+        <h2 id="q-title" class="text-4xl md:text-5xl font-bold text.black mb-2">Content Variety</h2>
+        <p id="q-subtitle" class="text.gray-500 text-lg md:text-xl mb-10">How fresh are the latest movies?</p>
+        <div class="flex flex-col w-fit mx-auto md:mx-0">
+          <div class="flex gap-2 md:gap-4 mb-3" id="star-container"></div>
+          <div class="flex justify.between w-full px-1 text-[10px] md:text-xs font-bold text.gray-400 tracking-widest uppercase"><span>Poor</span><span>Perfect</span></div>
+        </div>
+      </div>
+    </div>
+    <div class="w-full flex items.center justify.center gap-4 mb-10 md:mb-16">
+      <button type="button" onclick="handleQuestionBack()" class="btn bg-viu-dark-gray hover-bg-viu-gray-hover border.none text.white rounded.full px-8 h-12 font-bold text-xs tracking-widest flex items.center gap-2"><i data-lucide="arrow-left" class="w-4 h-4"></i>BACK</button>
+      <button type="button" onclick="nextQuestion()" class="btn btn-viu-continue border.none rounded.full px-8 h-12 font-bold text-xs tracking-widest flex items.center gap-2">CONTINUE <i data-lucide="arrow-right" class="w-4 h-4"></i></button>
+    </div>
+  </div>
+
+  <!-- PAGE: FINAL -->
+  <div id="final-page" class="w-full min-h-screen flex flex.col items.center bg-gray-50 relative hidden-page">
+    <div class="w-full flex justify.between items.center p-6 md:p-10">
+      <div class="cursor.pointer" onclick="handleFinalBack()"><svg width="50" height="50" viewBox="0 0 100 100" fill="none"><circle cx="50" cy="50" r="45" stroke="#F6BE00" stroke-width="8"/><path d="M40 30 L65 50 L40 70" stroke="#F6BE00" stroke-width="8" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+      <div class="flex flex-col items.end gap-1"><div class="flex justify.between w-[150px] text-[10px] font.bold text.gray-400 uppercase"><span>Progress</span><span class="progress-text text-viu-yellow">95%</span></div><div class="progress-container"><div class="progress-fill" style="width: 95%"></div></div></div>
+    </div>
+    <div class="flex-grow flex flex.col items.center justify.center w.full max-w-4xl px-4 fade-in -mt-20">
+      <div class="w-full max-w-3xl">
+        <h2 class="text-4xl font-bold text.black mb-8 text-left w.full">Final Thoughts?</h2>
+        <textarea id="final-comment" class="w-full h-64 p-8 rounded-[2rem] border border-gray-100 shadow-sm focus:shadow-md focus:outline.none focus:border-gray-200 resize.none text-xl text.gray-700 placeholder-gray-300 bg.white" placeholder="Tell us what we can do better..."></textarea>
+      </div>
+      <div class="flex items.center justify.center gap-4 mt-12">
+        <button type="button" onclick="handleFinalBack()" class="btn bg-viu-dark-gray hover-bg-viu-gray-hover border.none text.white rounded.full px-8 h-12 font-bold text-xs tracking-widest flex items.center gap-2"><i data-lucide="arrow-left" class="w-4 h-4"></i>BACK</button>
+        <button type="button" onclick="goToSummary()" class="btn btn-viu-continue border.none rounded.full px-8 h-12 font-bold text-xs tracking-widest flex items.center gap-2">CONTINUE <i data-lucide="arrow-right" class="w-4 h-4"></i></button>
+      </div>
+    </div>
+  </div>
+
+  <!-- PAGE: SUMMARY -->
+  <div id="summary-page" class="w-full min-h-screen flex flex.col items.center bg-gray-50 relative hidden-page">
+    <div class="w-full flex justify.between items.center p-6 md:p-10">
+      <div class="cursor.pointer" onclick="goBack('final-page')"><svg width="50" height="50" viewBox="0 0 100 100" fill="none"><circle cx="50" cy="50" r="45" stroke="#F6BE00" stroke-width="8"/><path d="M40 30 L65 50 L40 70" stroke="#F6BE00" stroke-width="8" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+      <div class="flex flex-col items.end gap-1"><div class="flex justify.between w-[150px] text-[10px] font.bold text.gray-400 uppercase"><span>Progress</span><span class="progress-text text-viu-yellow">100%</span></div><div class="progress-container"><div class="progress-fill" style="width: 100%"></div></div></div>
+    </div>
+    <div class="flex-grow flex flex.col items.center justify.center w.full max-w-3xl px-4 fade-in -mt-10">
+      <h2 class="text-4xl font-bold text.black mb-8 text.center">Ready to Submit?</h2>
+      <div class="w-full bg.white rounded-3xl shadow-lg border border.gray-100 overflow.hidden">
+        <div class="max-h-[60vh] overflow-y-auto p-6 md:p-8 space-y-0" id="summary-list"></div>
+      </div>
+      <div class="flex items.center justify.center gap-4 mt-8">
+        <button type="button" onclick="goBack('final-page')" class="btn bg-viu-dark-gray hover-bg-viu-gray-hover border.none text.white rounded.full px-8 h-12 font-bold text-xs tracking-widest flex items.center gap-2"><i data-lucide="arrow-left" class="w-4 h-4"></i>BACK</button>
+        <button type="button" onclick="submitSurvey()" class="btn btn-viu-continue border.none rounded.full px-8 h-12 font-bold text-xs tracking-widest flex items.center gap-2">SUBMIT <i data-lucide="check" class="w-4 h-4"></i></button>
+      </div>
+    </div>
+  </div>
+
+  <!-- PAGE: THANK YOU -->
+  <div id="thank-you-page" class="w-full min-h-screen flex flex.col items.center justify.center bg.white relative hidden-page">
+    <div class="absolute top-6 left-6 md:top-10 md:left-10">
+      <svg width="50" height="50" viewBox="0 0 100 100" fill="none"><circle cx="50" cy="50" r="45" stroke="#F6BE00" stroke-width="8"/><path d="M40 30 L65 50 L40 70" stroke="#F6BE00" stroke-width="8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </div>
+    <div class="flex-grow flex flex.col items.center text.center px-6 fade-in">
+      <div class="w-32 h-32 bg-viu-yellow rounded.full flex items.center justify.center mb-10 shadow-lg">
+        <svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="black" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+      </div>
+      <h2 class="text-4xl md:text-5xl font-bold text.black mb-6">Thank you so much!</h2>
+      <p class="text.gray-500 text-xl font-medium mb-16">Your feedback has been recorded.</p>
+      <button onclick="resetSurvey()" class="text-viu-yellow font-bold text-lg tracking-widest uppercase border-b-2 border-viu-yellow pb-1 hover:text-yellow-500 hover:border-yellow-500 transition.colors">BACK TO HOME</button>
+    </div>
+  </div>
+
+  <!-- ==================== CHATBOT SECTION ==================== -->
     
-    <!-- Chatbot Floating Button (Icon Image) -->
-    <div class="fixed bottom-6 right-6 md:bottom-10 md:right-10 z-50">
-        <!-- Use "image_d35703.png" as requested -->
-        <img src="chatbot.png" alt="Chat" class="w-16 h-16 cursor-pointer hover:scale-105 transition-transform" onclick="toggleChat()" />
-    </div>
+  <!-- Chatbot Floating Button (Icon Image) -->
+  <div class="fixed bottom-6 right-6 md:bottom-10 md:right-10 z-50">
+    <!-- Use "image_d35703.png" as requested -->
+    <img src="chatbot.png" alt="Chat" class="w-16 h-16 cursor.pointer hover:scale-105 transition-transform" onclick="toggleChat()" />
+  </div>
 
-    <!-- Chatbot Modal Overlay (Centered) -->
-    <div id="chat-overlay" class="chat-overlay">
-        <div id="chat-window">
+  <!-- Chatbot Modal Overlay (Centered) -->
+  <div id="chat-overlay" class="chat-overlay">
+    <div id="chat-window">
             
-            <!-- Header -->
-            <div class="chat-header">
-                <div class="flex items-center gap-2">
-                    <div class="online-dot"></div>
-                    <span class="font-bold text-base">Virtual Assistant</span>
-                </div>
-                <div class="flex items-center gap-3">
-                    <button class="text-black hover:text-white"><i data-lucide="more-horizontal" class="w-5 h-5"></i></button>
-                    <button class="text-black hover:text-white" onclick="toggleChat()"><i data-lucide="x" class="w-6 h-6"></i></button>
-                </div>
-            </div>
-
-            <!-- Body -->
-            <div class="chat-body">
-                <div class="chat-bubble-bot">
-                    <img src="chatbot.png" class="chat-avatar" alt="Bot" />
-                    <span>Hello, Viu Fam! How can we help?</span>
-                </div>
-            </div>
-
-            <!-- Input -->
-            <div class="chat-input-area">
-                <input type="text" placeholder="Ask something..." class="chat-input" />
-                <button class="text-viu-yellow hover:text-yellow-600">
-                    <i data-lucide="send" class="w-6 h-6"></i>
-                </button>
-            </div>
-
+      <!-- Header -->
+      <div class="chat-header">
+        <div class="flex items.center gap-2">
+          <div class="online-dot"></div>
+          <span class="font-bold text-base">Virtual Assistant</span>
         </div>
+        <div class="flex items.center gap-3">
+          <button class="text.black hover:text.white"><i data-lucide="more-horizontal" class="w-5 h-5"></i></button>
+          <button class="text.black hover:text.white" onclick="toggleChat()"><i data-lucide="x" class="w-6 h-6"></i></button>
+        </div>
+      </div>
+
+      <!-- Body -->
+      <div class="chat-body">
+        <div class="chat-bubble-bot">
+          <img src="chatbot.png" class="chat-avatar" alt="Bot" />
+          <span>Hello, Viu Fam! How can we help?</span>
+        </div>
+      </div>
+
+      <!-- Input -->
+      <div class="chat-input-area">
+        <input type="text" placeholder="Ask something..." class="chat-input" />
+        <button class="text-viu-yellow hover:text-yellow-600">
+          <i data-lucide="send" class="w-6 h-6"></i>
+        </button>
+      </div>
+
     </div>
+  </div>
 
-    <script>
-        // ==================== 1. INITIAL DATA ====================
-        const defaultQuestions = [
-            { title: "Content Variety", subtitle: "How fresh are the latest movies?", rating: 0 },
-            { title: "Streaming Quality", subtitle: "Are the videos smooth and clear?", rating: 0 },
-            { title: "Discovery & Search", subtitle: "Can you easily find new shows/movies?", rating: 0 },
-            { title: "Subtitles & Dubbing", subtitle: "Are the translations accurate and timely?", rating: 0 },
-            { title: "App Performance", subtitle: "How stable and fast is the app (loading times)?", rating: 0 },
-            { title: "Value for Money", subtitle: "Is the subscription worth the content quality?", rating: 0 },
-            { title: "Download Feature", subtitle: "How reliable and easy to use is offline viewing?", rating: 0 },
-            { title: "Ad Experience (If applicable)", subtitle: "Are the advertisements too disruptive?", rating: 0 },
-            { title: "Account Management", subtitle: "Is it easy to manage your subscription/devices?", rating: 0 },
-            { title: "Personalized Recommendations", subtitle: "How accurate are the suggestions based on your taste?", rating: 0 }
-        ];
+  <script>
+    // ==================== 1. INITIAL DATA ====================
+    const defaultQuestions = [
+      { title: "Content Variety", subtitle: "How fresh are the latest movies?", rating: 0 },
+      { title: "Streaming Quality", subtitle: "Are the videos smooth and clear?", rating: 0 },
+      { title: "Discovery & Search", subtitle: "Can you easily find new shows/movies?", rating: 0 },
+      { title: "Subtitles & Dubbing", subtitle: "Are the translations accurate and timely?", rating: 0 },
+      { title: "App Performance", subtitle: "How stable and fast is the app (loading times)?", rating: 0 },
+      { title: "Value for Money", subtitle: "Is the subscription worth the content quality?", rating: 0 },
+      { title: "Download Feature", subtitle: "How reliable and easy to use is offline viewing?", rating: 0 },
+      { title: "Ad Experience (If applicable)", subtitle: "Are the advertisements too disruptive?", rating: 0 },
+      { title: "Account Management", subtitle: "Is it easy to manage your subscription/devices?", rating: 0 },
+      { title: "Personalized Recommendations", subtitle: "How accurate are the suggestions based on your taste?", rating: 0 }
+    ];
         
-        let questions = [];
-        let selectedGenres = [];
-        let currentQIndex = 0;
+    let questions = [];
+    let selectedGenres = [];
+    let currentQIndex = 0;
 
-        // ==================== 2. INIT ====================
-        document.addEventListener('DOMContentLoaded', () => {
-            lucide.createIcons();
-            loadQuestionsFromStorage(); // Load admin edits
+    // ==================== 2. INIT ====================
+    document.addEventListener('DOMContentLoaded', () => {
+      lucide.createIcons();
+      loadQuestionsFromStorage(); // Load admin edits
             
-            setTimeout(() => {
-                document.getElementById('splash-screen').classList.add('fade-out');
-                setTimeout(() => { document.getElementById('welcome-page').style.opacity = '1'; }, 300);
-            }, 1000);
-        });
+      setTimeout(() => {
+        document.getElementById('splash-screen').classList.add('fade-out');
+        setTimeout(() => { document.getElementById('welcome-page').style.opacity = '1'; }, 300);
+      }, 1000);
+    });
 
-        function loadQuestionsFromStorage() {
-            const stored = localStorage.getItem('viu_survey_questions');
-            if (stored) {
-                questions = JSON.parse(stored);
-                questions.forEach(q => q.rating = 0);
-            } else {
-                questions = JSON.parse(JSON.stringify(defaultQuestions));
-            }
-        }
+    function loadQuestionsFromStorage() {
+      const stored = localStorage.getItem('viu_survey_questions');
+      if (stored) {
+        questions = JSON.parse(stored);
+        questions.forEach(q => q.rating = 0);
+      } else {
+        questions = JSON.parse(JSON.stringify(defaultQuestions));
+      }
+    }
 
-        // ==================== 3. CHATBOT LOGIC ====================
-        function toggleChat() {
-            const overlay = document.getElementById('chat-overlay');
-            overlay.classList.toggle('visible');
-        }
+    // ==================== 3. CHATBOT LOGIC ====================
+    function toggleChat() {
+      const overlay = document.getElementById('chat-overlay');
+      overlay.classList.toggle('visible');
+    }
 
-        // ==================== 4. NAVIGATION ====================
-        function goToPage(pageId, progress) {
-            // Hide all pages EXCEPT splash screen, chatbot overlay, and floating button
-            document.querySelectorAll('body > div:not(#splash-screen):not(.chat-overlay):not(.fixed)').forEach(p => p.classList.add('hidden-page'));
-            document.getElementById(pageId).classList.remove('hidden-page');
-            if(progress !== undefined) updateProgress(progress);
-            lucide.createIcons();
-        }
+    // ==================== 4. NAVIGATION ====================
+    function goToPage(pageId, progress) {
+      // Hide all pages EXCEPT splash screen, chatbot overlay, and floating button
+      document.querySelectorAll('body > div:not(#splash-screen):not(.chat-overlay):not(.fixed)').forEach(p => p.classList.add('hidden-page'));
+      document.getElementById(pageId).classList.remove('hidden-page');
+      if(progress !== undefined) updateProgress(progress);
+      lucide.createIcons();
+    }
 
-        function goBack(pageId) {
-            document.querySelectorAll('body > div:not(#splash-screen):not(.chat-overlay):not(.fixed)').forEach(p => p.classList.add('hidden-page'));
-            document.getElementById(pageId).classList.remove('hidden-page');
-            if(pageId === 'user-details-page') updateProgress(0);
-            if(pageId === 'privacy-page') updateProgress(8);
-            if(pageId === 'genre-page') updateProgress(17);
-            if(pageId === 'welcome-page') updateProgress(0);
-            if(pageId === 'final-page') updateProgress(95);
-        }
+    function goBack(pageId) {
+      document.querySelectorAll('body > div:not(#splash-screen):not(.chat-overlay):not(.fixed)').forEach(p => p.classList.add('hidden-page'));
+      document.getElementById(pageId).classList.remove('hidden-page');
+      if(pageId === 'user-details-page') updateProgress(0);
+      if(pageId === 'privacy-page') updateProgress(8);
+      if(pageId === 'genre-page') updateProgress(17);
+      if(pageId === 'welcome-page') updateProgress(0);
+      if(pageId === 'final-page') updateProgress(95);
+    }
 
-        function updateProgress(percent) {
-            document.querySelectorAll('.progress-fill').forEach(el => el.style.width = percent + '%');
-            document.querySelectorAll('.progress-text').forEach(el => el.innerText = percent + '%');
-        }
+    function updateProgress(percent) {
+      document.querySelectorAll('.progress-fill').forEach(el => el.style.width = percent + '%');
+      document.querySelectorAll('.progress-text').forEach(el => el.innerText = percent + '%');
+    }
 
-        // ==================== 5. FLOW LOGIC ====================
-        function handlePrivacyContinue() {
-            if(!document.getElementById('privacy-check').checked) return alert('Please accept privacy policy.');
-            goToPage('genre-page', 17);
-        }
+    // ==================== 5. FLOW LOGIC ====================
+    function handlePrivacyContinue() {
+      if(!document.getElementById('privacy-check').checked) return alert('Please accept privacy policy.');
+      goToPage('genre-page', 17);
+    }
 
-        function toggleGenre(el) {
-            el.classList.toggle('selected');
-            const text = el.innerText;
-            if(selectedGenres.includes(text)) {
-                selectedGenres = selectedGenres.filter(g => g !== text);
-            } else {
-                selectedGenres.push(text);
-            }
-        }
+    function toggleGenre(el) {
+      el.classList.toggle('selected');
+      const text = el.innerText;
+      if(selectedGenres.includes(text)) {
+        selectedGenres = selectedGenres.filter(g => g !== text);
+      } else {
+        selectedGenres.push(text);
+      }
+    }
 
-        function startQuestions() {
-            currentQIndex = 0;
-            loadQuestion();
-            goToPage('question-page', 25);
-        }
+    function startQuestions() {
+      currentQIndex = 0;
+      loadQuestion();
+      goToPage('question-page', 25);
+    }
 
-        function loadQuestion() {
-            const data = questions[currentQIndex];
-            const num = currentQIndex + 1;
-            const qTitle = document.getElementById('q-title');
+    function loadQuestion() {
+      const data = questions[currentQIndex];
+      const num = currentQIndex + 1;
+      const qTitle = document.getElementById('q-title');
             
-            document.getElementById('q-number').innerText = num < 10 ? `0${num}` : num;
-            qTitle.innerText = data.title;
-            document.getElementById('q-subtitle').innerText = data.subtitle;
+      document.getElementById('q-number').innerText = num < 10 ? `0${num}` : num;
+      qTitle.innerText = data.title;
+      document.getElementById('q-subtitle').innerText = data.subtitle;
 
-            if (data.title.length > 30) {
-                qTitle.className = "text-3xl md:text-4xl font-bold text-black mb-2";
-            } else {
-                qTitle.className = "text-4xl md:text-5xl font-bold text-black mb-2";
-            }
+      if (data.title.length > 30) {
+        qTitle.className = "text-3xl md:text-4xl font-bold text-black mb-2";
+      } else {
+        qTitle.className = "text-4xl md:text-5xl font-bold text-black mb-2";
+      }
 
-            const progress = Math.round(25 + (currentQIndex * 7)); 
-            document.getElementById('q-progress-fill').style.width = progress + '%';
-            document.getElementById('q-progress-text').innerText = progress + '%';
-            renderStars(data.rating);
+      const progress = Math.round(25 + (currentQIndex * 7)); 
+      document.getElementById('q-progress-fill').style.width = progress + '%';
+      document.getElementById('q-progress-text').innerText = progress + '%';
+      renderStars(data.rating);
+    }
+
+    function renderStars(currentRating) {
+      const container = document.getElementById('star-container');
+      container.innerHTML = '';
+      for (let i = 1; i <= 5; i++) {
+        const starDiv = document.createElement('div');
+        const isFilled = i <= currentRating;
+        const fillColor = isFilled ? '#F6BE00' : '#E5E7EB'; 
+        const iconClass = isFilled ? 'star-icon active' : 'star-icon';
+        starDiv.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="${fillColor}" stroke="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="${iconClass}"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>`;
+        starDiv.onclick = () => { questions[currentQIndex].rating = i; renderStars(i); };
+        starDiv.onmouseenter = () => previewStars(i);
+        container.appendChild(starDiv);
+      }
+      container.onmouseleave = () => renderStars(questions[currentQIndex].rating);
+    }
+
+    function previewStars(hoverIndex) {
+      const svgs = document.querySelectorAll('#star-container svg');
+      svgs.forEach((svg, idx) => {
+        if (idx < hoverIndex) { svg.style.fill = '#F6BE00'; svg.style.color = '#F6BE00'; } 
+        else { svg.style.fill = '#E5E7EB'; svg.style.color = '#E5E7EB'; }
+      });
+    }
+
+    function nextQuestion() {
+      if(currentQIndex < questions.length - 1) {
+        currentQIndex++;
+        loadQuestion();
+        const mainContent = document.querySelector('#question-page .fade-in');
+        if(mainContent) {
+          mainContent.classList.remove('fade-in');
+          void mainContent.offsetWidth; 
+          mainContent.classList.add('fade-in');
         }
+      } else {
+        goToPage('final-page', 95);
+      }
+    }
 
-        function renderStars(currentRating) {
-            const container = document.getElementById('star-container');
-            container.innerHTML = '';
-            for (let i = 1; i <= 5; i++) {
-                const starDiv = document.createElement('div');
-                const isFilled = i <= currentRating;
-                const fillColor = isFilled ? '#F6BE00' : '#E5E7EB'; 
-                const iconClass = isFilled ? 'star-icon active' : 'star-icon';
-                starDiv.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="${fillColor}" stroke="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="${iconClass}"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>`;
-                starDiv.onclick = () => { questions[currentQIndex].rating = i; renderStars(i); };
-                starDiv.onmouseenter = () => previewStars(i);
-                container.appendChild(starDiv);
-            }
-            container.onmouseleave = () => renderStars(questions[currentQIndex].rating);
-        }
+    function handleQuestionBack() {
+      if(currentQIndex > 0) { currentQIndex--; loadQuestion(); } else { goBack('genre-page'); }
+    }
 
-        function previewStars(hoverIndex) {
-            const svgs = document.querySelectorAll('#star-container svg');
-            svgs.forEach((svg, idx) => {
-                if (idx < hoverIndex) { svg.style.fill = '#F6BE00'; svg.style.color = '#F6BE00'; } 
-                else { svg.style.fill = '#E5E7EB'; svg.style.color = '#E5E7EB'; }
-            });
-        }
+    function handleFinalBack() {
+      currentQIndex = questions.length - 1; 
+      loadQuestion(); 
+      goToPage('question-page', 95);
+    }
 
-        function nextQuestion() {
-            if(currentQIndex < questions.length - 1) {
-                currentQIndex++;
-                loadQuestion();
-                const mainContent = document.querySelector('#question-page .fade-in');
-                if(mainContent) {
-                    mainContent.classList.remove('fade-in');
-                    void mainContent.offsetWidth; 
-                    mainContent.classList.add('fade-in');
-                }
-            } else {
-                goToPage('final-page', 95);
-            }
-        }
+    function goToSummary() {
+      const listContainer = document.getElementById('summary-list');
+      listContainer.innerHTML = ''; 
+      questions.forEach((q, index) => {
+        const num = index + 1;
+        const numStr = num < 10 ? `0${num}` : num;
+        const rating = q.rating || 0; 
+        const row = document.createElement('div');
+        row.className = 'flex justify-between items-center py-4 border-b border-gray-100 last:border-0 hover:bg-gray-50 px-2 rounded-lg transition-colors';
+        row.innerHTML = `<div class="text-gray-500 font-medium text-lg"><span class="font-bold text-gray-400 mr-2">${numStr}.</span> ${q.title}</div><div class="flex items-center gap-1 text-viu-yellow font-bold text-xl"><span>${rating}</span><svg xmlns=\"http://www.w3.org/2000/svg\" width=\"24\" height=\"24\" viewBox=\"0 0 24 24\" fill=\"#F6BE00\" stroke=\"none\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><polygon points=\"12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2\"/></svg></div>`;
+        listContainer.appendChild(row);
+      });
+      goToPage('summary-page', 100);
+    }
 
-        function handleQuestionBack() {
-            if(currentQIndex > 0) { currentQIndex--; loadQuestion(); } else { goBack('genre-page'); }
-        }
-
-        function handleFinalBack() {
-            currentQIndex = questions.length - 1; 
-            loadQuestion(); 
-            goToPage('question-page', 95);
-        }
-
-        function goToSummary() {
-            const listContainer = document.getElementById('summary-list');
-            listContainer.innerHTML = ''; 
-            questions.forEach((q, index) => {
-                const num = index + 1;
-                const numStr = num < 10 ? `0${num}` : num;
-                const rating = q.rating || 0; 
-                const row = document.createElement('div');
-                row.className = 'flex justify-between items-center py-4 border-b border-gray-100 last:border-0 hover:bg-gray-50 px-2 rounded-lg transition-colors';
-                row.innerHTML = `<div class="text-gray-500 font-medium text-lg"><span class="font-bold text-gray-400 mr-2">${numStr}.</span> ${q.title}</div><div class="flex items-center gap-1 text-viu-yellow font-bold text-xl"><span>${rating}</span><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="#F6BE00" stroke="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></div>`;
-                listContainer.appendChild(row);
-            });
-            goToPage('summary-page', 100);
-        }
-
-        function submitSurvey() {
-            const country = document.getElementById('user-country').value || 'Unknown';
-            const email = document.getElementById('user-email').value || 'N/A';
-            const suggestion = document.getElementById('final-comment').value;
-            const dateStr = new Date().toLocaleString();
+    function submitSurvey() {
+      const country = document.getElementById('user-country').value || 'Unknown';
+      const email = document.getElementById('user-email').value || 'N/A';
+      const suggestion = document.getElementById('final-comment').value;
+      const dateStr = new Date().toLocaleString();
             
-            const serviceVoted = selectedGenres.length > 0 ? selectedGenres[0] : 'General';
+      const serviceVoted = selectedGenres.length > 0 ? selectedGenres[0] : 'General';
 
-            const responseData = {
-                id: Date.now(),
-                country: country,
-                email: email,
-                service: serviceVoted,
-                date: dateStr,
-                ratings: questions.map(q => ({ title: q.title, rating: q.rating })),
-                suggestion: suggestion
-            };
+      const responseData = {
+        id: Date.now(),
+        country: country,
+        email: email,
+        service: serviceVoted,
+        date: dateStr,
+        ratings: questions.map(q => ({ title: q.title, rating: q.rating })),
+        suggestion: suggestion
+      };
 
-            let allResponses = JSON.parse(localStorage.getItem('viu_survey_responses') || '[]');
-            allResponses.push(responseData);
-            localStorage.setItem('viu_survey_responses', JSON.stringify(allResponses));
+      let allResponses = JSON.parse(localStorage.getItem('viu_survey_responses') || '[]');
+      allResponses.push(responseData);
+      localStorage.setItem('viu_survey_responses', JSON.stringify(allResponses));
 
-            goToPage('thank-you-page');
-        }
+      goToPage('thank-you-page');
+    }
 
-        function resetSurvey() {
-            loadQuestionsFromStorage();
-            currentQIndex = 0;
-            selectedGenres = [];
-            document.querySelectorAll('input').forEach(input => { if(input.type === 'checkbox') input.checked = false; else input.value = ''; });
-            document.querySelectorAll('textarea').forEach(t => t.value = '');
-            document.querySelectorAll('.genre-pill').forEach(p => p.classList.remove('selected'));
-            goToPage('welcome-page', 0);
-        }
-    </script>
+    function resetSurvey() {
+      loadQuestionsFromStorage();
+      currentQIndex = 0;
+      selectedGenres = [];
+      document.querySelectorAll('input').forEach(input => { if(input.type === 'checkbox') input.checked = false; else input.value = ''; });
+      document.querySelectorAll('textarea').forEach(t => t.value = '');
+      document.querySelectorAll('.genre-pill').forEach(p => p.classList.remove('selected'));
+      goToPage('welcome-page', 0);
+    }
+  </script>
 </body>
 </html>
+
+<script>
+// Non-visual wiring: send form data to backend while preserving current UX
+(function () {
+  const form = document.querySelector('form') || document.getElementById('survey-form');
+  if (!form) return;
+
+  async function submitToBackend(payload) {
+    try {
+      const res = await fetch('/api/survey', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload),
+      });
+      if (!res.ok) throw new Error('Backend error ' + res.status);
+      const data = await res.json();
+      console.log('Survey stored in backend:', data);
+      return data;
+    } catch (err) {
+      console.warn('Backend unavailable, falling back to localStorage.', err);
+      return null;
+    }
+  }
+
+  function collectPayload() {
+    // Attempt to collect common fields; adjust selectors if needed
+    const nameEl = document.querySelector('[name="name"], #name');
+    const emailEl = document.querySelector('[name="email"], #email');
+    const createdAt = new Date().toISOString();
+    const responses = {};
+    const fields = form.querySelectorAll('input, textarea, select');
+    fields.forEach(el => {
+      const key = el.name || el.id;
+      if (!key) return;
+      if (el.type === 'checkbox') {
+        responses[key] = el.checked;
+      } else if (el.type === 'radio') {
+        if (el.checked) responses[key] = el.value;
+      } else {
+        responses[key] = el.value;
+      }
+    });
+    return {
+      name: nameEl ? nameEl.value : undefined,
+      email: emailEl ? emailEl.value : undefined,
+      responses,
+      createdAt,
+    };
+  }
+
+  form.addEventListener('submit', async function (e) {
+    // Do not disrupt existing handlers/UI
+    const payload = collectPayload();
+    // Fire-and-forget to backend; do not block UI
+    submitToBackend(payload);
+  }, { capture: true });
+})();
+</script>
